@@ -1,0 +1,562 @@
+<title>Histórico · ReportingGriego</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+:root {
+  --bg-app:        #0F000A;
+  --bg-panel:      #1A000F;
+  --bg-card:       #240018;
+  --bg-input:      #1A000F;
+  --border-subtle: #4A0035;
+  --border-strong: #7A0058;
+  --brand-primary: #E91E8C;
+  --brand-ph:      #FF4DB8;
+  --brand-accent:  #FF9E00;
+  --status-ok:     #00C896;
+  --status-warn:   #FF9E00;
+  --status-err:    #FF3355;
+  --status-info:   #3DB8FF;
+  --status-neu:    #7A6A78;
+  --text-1:        #FFFFFF;
+  --text-2:        #C8A8BF;
+  --text-3:        #7A5A73;
+  --text-zero:     #4A3548;
+  --gradient-brand: linear-gradient(135deg,#E91E8C 0%,#7B2FF7 100%);
+  --gradient-rainbow: linear-gradient(180deg,#FF0054 0%,#FF4500 16%,#FFB800 33%,#00C896 50%,#3DB8FF 66%,#7B2FF7 83%,#E91E8C 100%);
+  --gradient-card: linear-gradient(160deg,#240018 0%,#1A000F 100%);
+  --font-d: 'Bebas Neue', Impact, sans-serif;
+  --font-u: 'Inter','Segoe UI',sans-serif;
+  --font-m: 'JetBrains Mono','Fira Code',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg-app);color:var(--text-1);font-family:var(--font-u);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.shell{display:grid;grid-template-columns:200px 1fr;grid-template-rows:52px 1fr;height:100vh;overflow:hidden}
+
+/* Header */
+.hdr{grid-column:1/-1;display:flex;align-items:center;gap:16px;padding:0 24px;background:var(--bg-panel);border-bottom:1px solid var(--border-subtle)}
+.hdr-brand{font-family:var(--font-d);font-size:22px;letter-spacing:.03em;background:var(--gradient-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;user-select:none}
+.hdr-sep{width:1px;height:22px;background:var(--border-subtle)}
+.hdr-sub{font-size:11px;color:var(--text-3);font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+.hdr-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.btn-icon{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;background:transparent;border:none;color:var(--text-2);cursor:pointer;transition:background 150ms}
+.btn-icon:hover{background:rgba(255,255,255,.06);color:var(--text-1)}
+
+/* Sidebar */
+.sidebar{background:var(--bg-panel);border-right:1px solid var(--border-subtle);padding:24px 0;display:flex;flex-direction:column;overflow:hidden;position:relative}
+.sidebar::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gradient-rainbow)}
+.nav-lbl{font-size:10px;font-weight:700;color:var(--text-3);letter-spacing:.14em;text-transform:uppercase;padding:12px 16px 8px 19px;margin-top:12px}
+.nav-lbl:first-child{margin-top:0}
+.nav-item{display:flex;align-items:center;gap:12px;padding:8px 16px 8px 19px;font-size:13px;font-weight:500;color:var(--text-2);cursor:pointer;border:none;background:transparent;width:100%;text-align:left;position:relative;transition:background 150ms,color 150ms;text-decoration:none}
+.nav-item:hover{background:rgba(255,255,255,.04);color:var(--text-1)}
+.nav-item.active{color:var(--brand-primary);background:rgba(233,30,140,.08)}
+.nav-item.active::after{content:'';position:absolute;right:0;top:6px;bottom:6px;width:2px;background:var(--brand-primary);border-radius:2px 0 0 2px}
+
+/* Main */
+.main{padding:24px;overflow-y:auto;display:flex;flex-direction:column;gap:20px}
+.main::-webkit-scrollbar{width:4px}
+.main::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:2px}
+
+.page-title{font-family:var(--font-d);font-size:22px;letter-spacing:.04em;line-height:1}
+.page-desc{font-size:12px;color:var(--text-3);margin-top:4px}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:8px;border:none;font:700 11px/1 var(--font-u);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background 150ms,transform 100ms;white-space:nowrap}
+.btn:active{transform:scale(.98)}
+.btn-ghost{background:transparent;color:var(--text-2);border:1.5px solid var(--border-subtle)}
+.btn-ghost:hover{background:rgba(255,255,255,.05);color:var(--text-1);border-color:var(--border-strong)}
+.btn-accent{background:var(--brand-accent);color:#0F000A}
+.btn-accent:hover{background:#FFB833}
+
+/* Filter row */
+.filters{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.select{background:var(--bg-input);border:1.5px solid var(--border-subtle);border-radius:8px;padding:8px 32px 8px 12px;color:var(--text-1);font:13px var(--font-u);cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237A5A73' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;transition:border-color 150ms,box-shadow 150ms}
+.select:focus{outline:none;border-color:var(--brand-primary);box-shadow:0 0 0 3px rgba(233,30,140,.18)}
+.filter-tabs{display:flex;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:8px;padding:3px;gap:2px}
+.tab{padding:4px 12px;border-radius:6px;font:700 10px var(--font-u);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;color:var(--text-3);background:transparent;border:none;transition:all 150ms}
+.tab:hover{color:var(--text-2)}
+.tab.active{background:var(--bg-panel);color:var(--text-1)}
+.filter-right{margin-left:auto;display:flex;gap:8px}
+
+/* KPI Cards */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi-card{background:var(--gradient-card);border:1px solid var(--border-subtle);border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:6px}
+.kpi-lbl{font-size:10px;font-weight:700;color:var(--text-3);letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.kpi-val{font-family:var(--font-d);font-size:36px;line-height:1;color:var(--text-1);font-variant-numeric:tabular-nums}
+.kpi-var{font-size:11px;font-weight:600;display:flex;align-items:center;gap:3px}
+.var-up{color:var(--status-ok)}
+.var-down{color:var(--status-err)}
+.var-zero{color:var(--status-warn)}
+.kpi-cap{font-size:11px;color:var(--text-3)}
+
+/* Table wrap */
+.table-wrap{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:12px;overflow:hidden}
+.table-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--border-subtle);background:var(--bg-panel)}
+.table-title{font-size:11px;font-weight:700;color:var(--text-2);letter-spacing:.1em;text-transform:uppercase}
+.table-count{font-size:11px;color:var(--text-3);font-family:var(--font-m)}
+.tbl-scroll{overflow-x:auto}
+.tbl-scroll::-webkit-scrollbar{height:4px}
+.tbl-scroll::-webkit-scrollbar-track{background:var(--border-subtle)}
+.tbl-scroll::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:2px}
+
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+thead th{background:var(--bg-panel);color:var(--text-2);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:10px 14px;text-align:right;border-bottom:1px solid var(--border-subtle);white-space:nowrap;cursor:pointer;user-select:none;transition:color 150ms}
+thead th:hover{color:var(--text-1)}
+thead th.left{text-align:left}
+thead th.sort-asc::after{content:' ▲';color:var(--brand-primary);font-size:9px}
+thead th.sort-desc::after{content:' ▼';color:var(--brand-primary);font-size:9px}
+
+tbody tr{border-bottom:1px solid var(--border-subtle);transition:background 150ms;cursor:default}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:rgba(255,255,255,.025)}
+tbody tr.row-err{border-left:3px solid var(--status-err)}
+tbody tr.row-err td:first-child{padding-left:11px}
+tbody tr.row-warn{border-left:3px solid var(--status-warn)}
+tbody tr.row-warn td:first-child{padding-left:11px}
+
+tbody td{padding:10px 14px;vertical-align:middle;color:var(--text-1);font-family:var(--font-m);font-size:12px;text-align:right;white-space:nowrap}
+tbody td.left{text-align:left;font-family:var(--font-u)}
+
+/* Cell value + variation layout */
+.cell-main{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.cell-val{font-size:12px;font-weight:500;color:var(--text-1)}
+.cell-val.zero{color:var(--text-zero)}
+.cell-diff{font-size:10px;font-weight:600;display:flex;align-items:center;gap:2px;line-height:1}
+.cell-diff.up{color:var(--status-ok)}
+.cell-diff.down{color:var(--status-err)}
+.cell-diff.neu{color:var(--text-3)}
+.cell-diff.first{color:var(--text-zero);font-weight:400}
+
+/* Badges */
+.badge{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:4px;font:700 10px var(--font-u);letter-spacing:.07em;text-transform:uppercase;white-space:nowrap;vertical-align:middle}
+.bd-ok  {background:rgba(0,200,150,.14);color:var(--status-ok)}
+.bd-err {background:rgba(255,51,85,.14); color:var(--status-err)}
+.bd-warn{background:rgba(255,158,0,.14); color:var(--status-warn)}
+.bd-neu {background:rgba(122,106,120,.14);color:var(--status-neu)}
+.bd-dot {width:4px;height:4px;border-radius:50%;background:currentColor}
+
+/* Period cell */
+.period-cell{display:flex;flex-direction:column;gap:2px}
+.period-month{font-family:var(--font-d);font-size:16px;letter-spacing:.04em;color:var(--text-1)}
+.period-tag{display:flex;gap:4px;align-items:center}
+
+/* Warn tooltip for zero-drop */
+.zero-alert{position:relative;display:inline-flex;align-items:center;gap:4px}
+.zero-alert::after{
+  content:attr(data-tip);
+  position:absolute;
+  bottom:calc(100% + 6px);
+  right:0;
+  background:#1A000F;
+  border:1px solid var(--border-strong);
+  color:var(--text-2);
+  font-family:var(--font-u);
+  font-size:10px;
+  font-weight:400;
+  padding:5px 8px;
+  border-radius:6px;
+  white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 150ms;
+  z-index:10;
+  max-width:260px;
+  white-space:normal;
+  text-align:left;
+  line-height:1.5;
+}
+.zero-alert:hover::after{opacity:1}
+
+/* Source dots */
+.src-dots{display:flex;gap:3px;align-items:center}
+.src-dot{width:7px;height:7px;border-radius:2px}
+.sd-ok{background:var(--status-ok)}
+.sd-err{background:var(--status-err)}
+</style>
+
+<div class="shell">
+
+<!-- Header -->
+<header class="hdr">
+  <span class="hdr-brand">ReportingGriego</span>
+  <div class="hdr-sep"></div>
+  <span class="hdr-sub">Panel de control</span>
+  <div class="hdr-right">
+    <button class="btn-icon"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></button>
+    <button class="btn-icon"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06-.06a2 2 0 1 1-2.83-2.83l.06.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
+  </div>
+</header>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <span class="nav-lbl">Principal</span>
+  <a class="nav-item" href="#" onclick="return false"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Inicio</a>
+  <a class="nav-item" href="#" onclick="return false"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Sitios</a>
+  <span class="nav-lbl">Informes</span>
+  <a class="nav-item" href="#" onclick="return false"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Generar informe</a>
+  <a class="nav-item active" href="#" onclick="return false"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>Histórico</a>
+  <span class="nav-lbl">Análisis</span>
+  <a class="nav-item" href="#" onclick="return false"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>Oportunidades SEO</a>
+  <a class="nav-item" href="#" onclick="return false"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Seguridad</a>
+  <a class="nav-item" href="#" onclick="return false"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Evidencias</a>
+</nav>
+
+<!-- Main -->
+<main class="main">
+
+  <div>
+    <h1 class="page-title">Histórico de registros</h1>
+    <p class="page-desc">Filas mensuales inmutables por sitio — valores absolutos y variación respecto al mes anterior</p>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters">
+    <select class="select" id="siteSelect" onchange="updateView()">
+      <option value="elgriego" selected>elgriego.net</option>
+      <option value="andres">diseñoandres.com</option>
+      <option value="cafeteria">cafeteríabernal.es</option>
+      <option value="finca">fincalasierra.com</option>
+    </select>
+    <div class="filter-tabs">
+      <button class="tab" onclick="setRange(this,3)">3 meses</button>
+      <button class="tab active" onclick="setRange(this,6)">6 meses</button>
+      <button class="tab" onclick="setRange(this,12)">12 meses</button>
+      <button class="tab" onclick="setRange(this,99)">Todo</button>
+    </div>
+    <div class="filter-right">
+      <button class="btn btn-ghost">
+        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Exportar CSV
+      </button>
+    </div>
+  </div>
+
+  <!-- KPI Cards — most recent period -->
+  <div class="kpi-grid">
+
+    <div class="kpi-card">
+      <div class="kpi-lbl">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="var(--status-info)" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Impresiones
+      </div>
+      <div class="kpi-val">128.450</div>
+      <div class="kpi-var var-up">▲ +13,5% vs jul 2026</div>
+      <div class="kpi-cap">ago 2026 · Google Search Console</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-lbl">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="var(--status-ok)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Sesiones
+      </div>
+      <div class="kpi-val">14.230</div>
+      <div class="kpi-var var-up">▲ +11,2% vs jul 2026</div>
+      <div class="kpi-cap">ago 2026 · Google Site Kit</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-lbl">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="#7B2FF7" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"/></svg>
+        PageSpeed móvil
+      </div>
+      <div class="kpi-val">73</div>
+      <div class="kpi-var var-up">▲ +2 pts vs jul 2026</div>
+      <div class="kpi-cap">ago 2026 · PageSpeed Insights</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-lbl">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="var(--status-warn)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Referidos
+        <span class="badge bd-warn" style="margin-left:4px">FR-013</span>
+      </div>
+      <div class="kpi-val" style="color:var(--text-zero)">0</div>
+      <div class="kpi-var var-zero">▼ Cayó a 0 — era 142 en jul</div>
+      <div class="kpi-cap">ago 2026 · Revisar fuentes de referido</div>
+    </div>
+
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrap">
+    <div class="table-header">
+      <div>
+        <span class="table-title">Registros mensuales</span>
+        <span class="table-count" style="margin-left:12px">· 6 filas · elgriego.net · últimos 6 meses</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-3)">
+        <span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:2px;background:var(--status-err);display:inline-block"></span> Datos parciales</span>
+        <span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:2px;background:var(--status-warn);display:inline-block"></span> Alerta métrica</span>
+      </div>
+    </div>
+
+    <div class="tbl-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th class="left" style="min-width:120px">Periodo</th>
+            <th class="left" style="min-width:80px">Fuentes</th>
+            <th style="min-width:110px">Impresiones</th>
+            <th style="min-width:90px">Clics</th>
+            <th style="min-width:100px">Pos. media</th>
+            <th style="min-width:100px">Sesiones</th>
+            <th style="min-width:80px">Orgánico %</th>
+            <th style="min-width:80px">Directo %</th>
+            <th style="min-width:80px">Redes %</th>
+            <th style="min-width:90px">Referidos %</th>
+            <th style="min-width:90px">PS escritorio</th>
+            <th style="min-width:80px">PS móvil</th>
+            <th style="min-width:80px">Incidencias</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- ago 2026 — Squirrly failed (datos parciales) + referidos cayó a 0 (FR-013) -->
+          <tr class="row-err">
+            <td class="left">
+              <div class="period-cell">
+                <span class="period-month">ago 2026</span>
+                <div class="period-tag">
+                  <span class="badge bd-err"><span class="bd-dot"></span>Datos parciales</span>
+                </div>
+              </div>
+            </td>
+            <td class="left">
+              <div class="src-dots" title="SC OK · SK OK · SQ Falló · PS OK · SN OK">
+                <div class="src-dot sd-ok" title="Search Console"></div>
+                <div class="src-dot sd-ok" title="Site Kit"></div>
+                <div class="src-dot sd-err" title="Squirrly — Falló"></div>
+                <div class="src-dot sd-ok" title="PageSpeed"></div>
+                <div class="src-dot sd-ok" title="Security Ninja"></div>
+              </div>
+              <div style="font-size:10px;color:var(--status-err);margin-top:3px;font-family:var(--font-m)">4/5 OK</div>
+            </td>
+            <td>
+              <div class="cell-main">
+                <span class="cell-val">128.450</span>
+                <span class="cell-diff up">▲ +13,5%</span>
+              </div>
+            </td>
+            <td>
+              <div class="cell-main">
+                <span class="cell-val">3.210</span>
+                <span class="cell-diff up">▲ +11,1%</span>
+              </div>
+            </td>
+            <td>
+              <div class="cell-main">
+                <span class="cell-val">18,4</span>
+                <span class="cell-diff up" title="Posición: cuanto menor, mejor">▲ −0,7 pts</span>
+              </div>
+            </td>
+            <td>
+              <div class="cell-main">
+                <span class="cell-val">14.230</span>
+                <span class="cell-diff up">▲ +11,2%</span>
+              </div>
+            </td>
+            <td>
+              <div class="cell-main">
+                <span class="cell-val">62%</span>
+                <span class="cell-diff up">▲ +3 pts</span>
+              </div>
+            </td>
+            <td>
+              <div class="cell-main">
+                <span class="cell-val">28%</span>
+                <span class="cell-diff down">▼ −3 pts</span>
+              </div>
+            </td>
+            <td>
+              <div class="cell-main">
+                <span class="cell-val">9%</span>
+                <span class="cell-diff neu">— sin cambio</span>
+              </div>
+            </td>
+            <td>
+              <!-- FR-013: referidos cayó a 0 por primera vez -->
+              <div class="cell-main">
+                <div class="zero-alert" data-tip="FR-013 · Referidos cayó a 0 este mes. En julio eran 142. Revisa fuentes de referido.">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--status-warn)" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  <span class="cell-val zero">0%</span>
+                </div>
+                <span class="cell-diff down">▼ −100% · era 142</span>
+              </div>
+            </td>
+            <td>
+              <div class="cell-main">
+                <span class="cell-val">91</span>
+                <span class="cell-diff up">▲ +2 pts</span>
+              </div>
+            </td>
+            <td>
+              <div class="cell-main">
+                <span class="cell-val">73</span>
+                <span class="cell-diff up">▲ +2 pts</span>
+              </div>
+            </td>
+            <td>
+              <div class="cell-main">
+                <span class="cell-val zero">0</span>
+                <span class="cell-diff neu">— sin cambio</span>
+              </div>
+            </td>
+          </tr>
+
+          <!-- jul 2026 — all OK -->
+          <tr>
+            <td class="left">
+              <div class="period-cell">
+                <span class="period-month">jul 2026</span>
+                <div class="period-tag">
+                  <span class="badge bd-ok"><span class="bd-dot"></span>Completo</span>
+                </div>
+              </div>
+            </td>
+            <td class="left">
+              <div class="src-dots">
+                <div class="src-dot sd-ok"></div><div class="src-dot sd-ok"></div><div class="src-dot sd-ok"></div><div class="src-dot sd-ok"></div><div class="src-dot sd-ok"></div>
+              </div>
+              <div style="font-size:10px;color:var(--status-ok);margin-top:3px;font-family:var(--font-m)">5/5 OK</div>
+            </td>
+            <td><div class="cell-main"><span class="cell-val">113.200</span><span class="cell-diff down">▼ −4,5%</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">2.890</span><span class="cell-diff down">▼ −6,8%</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">19,1</span><span class="cell-diff down">▼ +0,4 pts</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">12.800</span><span class="cell-diff down">▼ −4,5%</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">59%</span><span class="cell-diff down">▼ −2 pts</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">31%</span><span class="cell-diff up">▲ +3 pts</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">9%</span><span class="cell-diff neu">— sin cambio</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">142</span><span class="cell-diff up">▲ +8%</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">89</span><span class="cell-diff up">▲ +2 pts</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">71</span><span class="cell-diff up">▲ +3 pts</span></div></td>
+            <td><div class="cell-main"><span class="cell-val zero">0</span><span class="cell-diff neu">— sin cambio</span></div></td>
+          </tr>
+
+          <!-- jun 2026 — 2 incidencias de seguridad -->
+          <tr class="row-warn">
+            <td class="left">
+              <div class="period-cell">
+                <span class="period-month">jun 2026</span>
+                <div class="period-tag">
+                  <span class="badge bd-warn"><span class="bd-dot"></span>Incidencias</span>
+                </div>
+              </div>
+            </td>
+            <td class="left">
+              <div class="src-dots">
+                <div class="src-dot sd-ok"></div><div class="src-dot sd-ok"></div><div class="src-dot sd-ok"></div><div class="src-dot sd-ok"></div><div class="src-dot sd-ok"></div>
+              </div>
+              <div style="font-size:10px;color:var(--status-ok);margin-top:3px;font-family:var(--font-m)">5/5 OK</div>
+            </td>
+            <td><div class="cell-main"><span class="cell-val">118.500</span><span class="cell-diff up">▲ +25,8%</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">3.100</span><span class="cell-diff up">▲ +29,2%</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">18,7</span><span class="cell-diff up">▲ −2,5 pts</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">13.400</span><span class="cell-diff up">▲ +22,9%</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">61%</span><span class="cell-diff up">▲ +6 pts</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">28%</span><span class="cell-diff down">▼ −7 pts</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">9%</span><span class="cell-diff neu">— sin cambio</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">131</span><span class="cell-diff up">▲ +14%</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">87</span><span class="cell-diff up">▲ +2 pts</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">68</span><span class="cell-diff up">▲ +3 pts</span></div></td>
+            <td><div class="cell-main"><span class="cell-val" style="color:var(--status-warn)">2</span><span class="cell-diff down">▲ +2 nuevas</span></div></td>
+          </tr>
+
+          <!-- may 2026 -->
+          <tr>
+            <td class="left">
+              <div class="period-cell">
+                <span class="period-month">may 2026</span>
+                <div class="period-tag"><span class="badge bd-ok"><span class="bd-dot"></span>Completo</span></div>
+              </div>
+            </td>
+            <td class="left">
+              <div class="src-dots">
+                <div class="src-dot sd-ok"></div><div class="src-dot sd-ok"></div><div class="src-dot sd-ok"></div><div class="src-dot sd-ok"></div><div class="src-dot sd-ok"></div>
+              </div>
+              <div style="font-size:10px;color:var(--status-ok);margin-top:3px;font-family:var(--font-m)">5/5 OK</div>
+            </td>
+            <td><div class="cell-main"><span class="cell-val">94.200</span><span class="cell-diff up">▲ +7,9%</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">2.400</span><span class="cell-diff up">▲ +14,3%</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">21,2</span><span class="cell-diff up">▲ −1,6 pts</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">10.900</span><span class="cell-diff up">▲ +11,2%</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">55%</span><span class="cell-diff up">▲ +2 pts</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">35%</span><span class="cell-diff down">▼ −2 pts</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">9%</span><span class="cell-diff neu">— sin cambio</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">115</span><span class="cell-diff up">▲ +21%</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">85</span><span class="cell-diff down">▼ −3 pts</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">65</span><span class="cell-diff down">▼ −2 pts</span></div></td>
+            <td><div class="cell-main"><span class="cell-val zero">0</span><span class="cell-diff neu">— sin cambio</span></div></td>
+          </tr>
+
+          <!-- abr 2026 — 1 incidencia -->
+          <tr>
+            <td class="left">
+              <div class="period-cell">
+                <span class="period-month">abr 2026</span>
+                <div class="period-tag"><span class="badge bd-ok"><span class="bd-dot"></span>Completo</span></div>
+              </div>
+            </td>
+            <td class="left">
+              <div class="src-dots">
+                <div class="src-dot sd-ok"></div><div class="src-dot sd-ok"></div><div class="src-dot sd-ok"></div><div class="src-dot sd-ok"></div><div class="src-dot sd-ok"></div>
+              </div>
+              <div style="font-size:10px;color:var(--status-ok);margin-top:3px;font-family:var(--font-m)">5/5 OK</div>
+            </td>
+            <td><div class="cell-main"><span class="cell-val">87.300</span><span class="cell-diff up">▲ +6,3%</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">2.100</span><span class="cell-diff up">▲ +7,7%</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">22,8</span><span class="cell-diff down">▼ +0,7 pts</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">9.800</span><span class="cell-diff up">▲ +6,5%</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">53%</span><span class="cell-diff up">▲ +2 pts</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">37%</span><span class="cell-diff down">▼ −1 pt</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">9%</span><span class="cell-diff neu">— sin cambio</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">95</span><span class="cell-diff up">▲ +3%</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">88</span><span class="cell-diff up">▲ +4 pts</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">67</span><span class="cell-diff up">▲ +5 pts</span></div></td>
+            <td><div class="cell-main"><span class="cell-val" style="color:var(--status-warn)">1</span><span class="cell-diff down">▲ +1 nueva</span></div></td>
+          </tr>
+
+          <!-- mar 2026 — primer mes, sin variación -->
+          <tr>
+            <td class="left">
+              <div class="period-cell">
+                <span class="period-month">mar 2026</span>
+                <div class="period-tag"><span class="badge bd-neu"><span class="bd-dot"></span>Primer registro</span></div>
+              </div>
+            </td>
+            <td class="left">
+              <div class="src-dots">
+                <div class="src-dot sd-ok"></div><div class="src-dot sd-ok"></div><div class="src-dot sd-ok"></div><div class="src-dot sd-ok"></div><div class="src-dot sd-ok"></div>
+              </div>
+              <div style="font-size:10px;color:var(--status-ok);margin-top:3px;font-family:var(--font-m)">5/5 OK</div>
+            </td>
+            <td><div class="cell-main"><span class="cell-val">82.100</span><span class="cell-diff first">— sin periodo anterior</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">1.950</span><span class="cell-diff first">— sin periodo anterior</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">23,5</span><span class="cell-diff first">— sin periodo anterior</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">9.200</span><span class="cell-diff first">— sin periodo anterior</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">51%</span><span class="cell-diff first">—</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">38%</span><span class="cell-diff first">—</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">9%</span><span class="cell-diff first">—</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">92</span><span class="cell-diff first">—</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">84</span><span class="cell-diff first">—</span></div></td>
+            <td><div class="cell-main"><span class="cell-val">62</span><span class="cell-diff first">—</span></div></td>
+            <td><div class="cell-main"><span class="cell-val zero">0</span><span class="cell-diff first">—</span></div></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<script>
+function setRange(el, n) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  // In a real app this would filter rows; here it's a visual affordance
+}
+function updateView() {
+  // Site change would reload data; visual affordance only in this mockup
+}
+</script>

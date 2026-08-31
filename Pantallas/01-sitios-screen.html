@@ -1,0 +1,1223 @@
+<title>Sitios · ReportingGriego</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+  /* ─── Tokens (single dark theme by brand intent) ─── */
+  :root {
+    --bg-app:           #0F000A;
+    --bg-panel:         #1A000F;
+    --bg-card:          #240018;
+    --bg-card-hover:    #2E001F;
+    --bg-input:         #1A000F;
+    --bg-drawer:        #1E0015;
+    --border-subtle:    #4A0035;
+    --border-strong:    #7A0058;
+
+    --brand-primary:    #E91E8C;
+    --brand-primary-h:  #FF4DB8;
+    --brand-primary-dim:#7A1050;
+    --brand-accent:     #FF9E00;
+    --brand-accent-h:   #FFB833;
+
+    --status-success:   #00C896;
+    --status-warning:   #FF9E00;
+    --status-error:     #FF3355;
+    --status-info:      #3DB8FF;
+    --status-neutral:   #7A6A78;
+
+    --text-primary:     #FFFFFF;
+    --text-secondary:   #C8A8BF;
+    --text-muted:       #7A5A73;
+    --text-zero:        #4A3548;
+
+    --gradient-brand:   linear-gradient(135deg, #E91E8C 0%, #7B2FF7 100%);
+    --gradient-rainbow: linear-gradient(180deg, #FF0054 0%, #FF4500 16%, #FFB800 33%, #00C896 50%, #3DB8FF 66%, #7B2FF7 83%, #E91E8C 100%);
+
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+
+    --sp1: 4px; --sp2: 8px; --sp3: 12px; --sp4: 16px;
+    --sp5: 20px; --sp6: 24px; --sp8: 32px;
+
+    --font-display: 'Bebas Neue', Impact, sans-serif;
+    --font-ui:      'Inter', 'Segoe UI', Helvetica, sans-serif;
+    --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+
+    --sidebar-w: 200px;
+    --header-h:  52px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    background: var(--bg-app);
+    color: var(--text-primary);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── Shell ─── */
+  .shell {
+    display: grid;
+    grid-template-columns: var(--sidebar-w) 1fr;
+    grid-template-rows: var(--header-h) 1fr;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ─── Header ─── */
+  .header {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: var(--sp4);
+    padding: 0 var(--sp6);
+    background: var(--bg-panel);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .header-brand {
+    font-family: var(--font-display);
+    font-size: 22px;
+    letter-spacing: 0.03em;
+    background: var(--gradient-brand);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    white-space: nowrap;
+    user-select: none;
+  }
+  .header-sep {
+    width: 1px;
+    height: 22px;
+    background: var(--border-subtle);
+  }
+  .header-subtitle {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .header-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: var(--sp3);
+  }
+  .btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-md);
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background 150ms, color 150ms;
+  }
+  .btn-icon:hover { background: rgba(255,255,255,0.06); color: var(--text-primary); }
+  .btn-icon:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(233,30,140,.35); }
+
+  /* ─── Sidebar ─── */
+  .sidebar {
+    background: var(--bg-panel);
+    border-right: 1px solid var(--border-subtle);
+    padding: var(--sp6) 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+  /* Rainbow bar */
+  .sidebar::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--gradient-rainbow);
+  }
+
+  .nav-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: var(--sp3) var(--sp4) var(--sp2) calc(var(--sp4) + 3px);
+    margin-top: var(--sp4);
+  }
+  .nav-section-label:first-child { margin-top: 0; }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: var(--sp3);
+    padding: var(--sp2) var(--sp4) var(--sp2) calc(var(--sp4) + 3px);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background 150ms, color 150ms;
+    border: none;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+    border-radius: 0;
+    position: relative;
+    text-decoration: none;
+  }
+  .nav-item:hover { background: rgba(255,255,255,0.04); color: var(--text-primary); }
+  .nav-item.active {
+    color: var(--brand-primary);
+    background: rgba(233,30,140,0.08);
+  }
+  .nav-item.active::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 6px; bottom: 6px;
+    width: 2px;
+    background: var(--brand-primary);
+    border-radius: 2px 0 0 2px;
+  }
+  .nav-item:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--brand-primary); }
+
+  .nav-badge {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--brand-primary);
+    background: rgba(233,30,140,0.14);
+    padding: 1px 6px;
+    border-radius: 10px;
+  }
+
+  /* ─── Main content ─── */
+  .main {
+    padding: var(--sp6);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp6);
+  }
+
+  /* ─── Page header ─── */
+  .page-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp4);
+  }
+  .page-title-group { flex: 1; }
+  .page-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    letter-spacing: 0.04em;
+    color: var(--text-primary);
+    line-height: 1;
+  }
+  .page-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: var(--sp1);
+  }
+
+  /* ─── Buttons ─── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp2);
+    padding: 9px var(--sp5);
+    border-radius: var(--radius-md);
+    border: none;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 150ms, transform 100ms;
+    white-space: nowrap;
+    line-height: 1;
+  }
+  .btn:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(233,30,140,.35); }
+  .btn:active { transform: scale(.98); }
+
+  .btn-primary {
+    background: var(--brand-primary);
+    color: #fff;
+  }
+  .btn-primary:hover { background: var(--brand-primary-h); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--brand-primary);
+    border: 1.5px solid var(--brand-primary);
+  }
+  .btn-secondary:hover { background: rgba(233,30,140,0.10); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1.5px solid var(--border-subtle);
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.05); color: var(--text-primary); border-color: var(--border-strong); }
+
+  .btn-danger {
+    background: transparent;
+    color: var(--status-error);
+    border: 1.5px solid var(--status-error);
+  }
+  .btn-danger:hover { background: rgba(255,51,85,0.10); }
+
+  /* ─── Filters ─── */
+  .filters {
+    display: flex;
+    align-items: center;
+    gap: var(--sp3);
+    flex-wrap: wrap;
+  }
+  .filter-tabs {
+    display: flex;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 3px;
+    gap: 2px;
+  }
+  .tab {
+    padding: 5px 14px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: var(--text-muted);
+    background: transparent;
+    border: none;
+    transition: background 150ms, color 150ms;
+  }
+  .tab:hover { color: var(--text-secondary); background: rgba(255,255,255,.04); }
+  .tab.active { background: var(--bg-panel); color: var(--text-primary); }
+  .tab:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--brand-primary); }
+
+  .filter-right { margin-left: auto; display: flex; gap: var(--sp2); }
+
+  .search-box {
+    display: flex;
+    align-items: center;
+    gap: var(--sp2);
+    background: var(--bg-input);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 6px 12px;
+    transition: border-color 150ms, box-shadow 150ms;
+  }
+  .search-box:focus-within {
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 3px rgba(233,30,140,0.18);
+  }
+  .search-box input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    font: 13px var(--font-ui);
+    width: 180px;
+  }
+  .search-box input::placeholder { color: var(--text-muted); }
+
+  /* ─── Sites table ─── */
+  .sites-table-wrap {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+
+  thead th {
+    background: var(--bg-panel);
+    color: var(--text-secondary);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-subtle);
+    white-space: nowrap;
+  }
+  thead th:first-child { padding-left: 20px; }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border-subtle);
+    transition: background 150ms;
+    position: relative;
+    cursor: default;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.025); }
+  tbody tr.has-error { border-left: 3px solid var(--status-error); }
+  tbody tr.has-error td:first-child { padding-left: 17px; }
+  tbody tr.inactive { opacity: .6; }
+
+  tbody td {
+    padding: 12px 16px;
+    vertical-align: middle;
+    color: var(--text-primary);
+  }
+  tbody td:first-child { padding-left: 20px; }
+
+  .site-name-cell { min-width: 200px; }
+  .site-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: block;
+  }
+  .site-url {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    display: block;
+    margin-top: 1px;
+  }
+
+  /* ─── Status badge ─── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .badge-success { background: rgba(0,200,150,0.15); color: var(--status-success); }
+  .badge-error   { background: rgba(255,51,85,0.15);  color: var(--status-error); }
+  .badge-neutral { background: rgba(122,106,120,0.15); color: var(--status-neutral); }
+  .badge-warning { background: rgba(255,158,0,0.15);  color: var(--status-warning); }
+
+  .badge-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  /* ─── Sources grid ─── */
+  .sources {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .source-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    position: relative;
+    transition: transform 150ms;
+  }
+  .source-dot:hover { transform: scale(1.15); }
+  .source-dot[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #160010;
+    border: 1px solid var(--border-strong);
+    color: var(--text-primary);
+    font-family: var(--font-ui);
+    font-size: 10px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 10;
+  }
+  .source-ok   { background: rgba(0,200,150,0.14); color: var(--status-success); }
+  .source-err  { background: rgba(255,51,85,0.14);  color: var(--status-error); }
+  .source-none { background: rgba(74,0,53,0.4);     color: var(--text-muted); border: 1px dashed var(--border-subtle); }
+  .source-warn { background: rgba(255,158,0,0.14);  color: var(--status-warning); }
+
+  /* ─── Timestamp ─── */
+  .ts {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* ─── Row actions ─── */
+  .row-actions {
+    display: flex;
+    gap: var(--sp2);
+    justify-content: flex-end;
+    opacity: 0;
+    transition: opacity 150ms;
+  }
+  tbody tr:hover .row-actions { opacity: 1; }
+
+  /* ─── Empty state ─── */
+  .empty-state {
+    padding: 64px var(--sp6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp4);
+    text-align: center;
+  }
+  .empty-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-lg);
+    background: rgba(233,30,140,0.08);
+    border: 1px solid rgba(233,30,140,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .empty-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    color: var(--text-primary);
+    letter-spacing: 0.04em;
+  }
+  .empty-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    max-width: 320px;
+    line-height: 1.6;
+  }
+
+  /* ─── Drawer overlay ─── */
+  .drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10,0,7,0.6);
+    backdrop-filter: blur(2px);
+    z-index: 100;
+    display: none;
+    align-items: stretch;
+    justify-content: flex-end;
+  }
+  .drawer-overlay.open { display: flex; }
+
+  .drawer {
+    width: 420px;
+    background: var(--bg-drawer);
+    border-left: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: slideIn 220ms ease-out;
+  }
+  @keyframes slideIn {
+    from { transform: translateX(40px); opacity: 0; }
+    to   { transform: translateX(0);    opacity: 1; }
+  }
+
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--sp5) var(--sp6);
+    border-bottom: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+  }
+  .drawer-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    letter-spacing: 0.04em;
+  }
+
+  .drawer-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--sp6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp6);
+  }
+  .drawer-body::-webkit-scrollbar { width: 4px; }
+  .drawer-body::-webkit-scrollbar-track { background: transparent; }
+  .drawer-body::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
+
+  .drawer-footer {
+    padding: var(--sp4) var(--sp6);
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    gap: var(--sp3);
+    justify-content: flex-end;
+    flex-shrink: 0;
+  }
+
+  /* ─── Form elements ─── */
+  .field { display: flex; flex-direction: column; gap: var(--sp2); }
+  .field-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .field-hint {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .input {
+    background: var(--bg-input);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 9px 14px;
+    color: var(--text-primary);
+    font: 13px var(--font-ui);
+    width: 100%;
+    transition: border-color 150ms, box-shadow 150ms;
+  }
+  .input::placeholder { color: var(--text-muted); }
+  .input:focus {
+    outline: none;
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 3px rgba(233,30,140,0.18);
+  }
+  .input-mono {
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+
+  /* ─── Source config block ─── */
+  .source-block {
+    background: rgba(36,0,24,0.6);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .source-block-header {
+    display: flex;
+    align-items: center;
+    gap: var(--sp3);
+    padding: var(--sp3) var(--sp4);
+    background: rgba(26,0,15,0.8);
+    border-bottom: 1px solid var(--border-subtle);
+    cursor: pointer;
+    user-select: none;
+    transition: background 150ms;
+  }
+  .source-block-header:hover { background: rgba(26,0,15,1); }
+  .source-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .si-sc  { background: rgba(61,184,255,0.12); }
+  .si-sk  { background: rgba(0,200,150,0.12); }
+  .si-sq  { background: rgba(255,158,0,0.12); }
+  .si-ps  { background: rgba(123,47,247,0.12); }
+  .si-sn  { background: rgba(233,30,140,0.12); }
+
+  .source-block-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    flex: 1;
+  }
+  .source-block-status { flex-shrink: 0; }
+  .source-block-body {
+    padding: var(--sp4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp3);
+  }
+  .source-block.collapsed .source-block-body { display: none; }
+
+  .chevron { transition: transform 200ms; color: var(--text-muted); }
+  .source-block.collapsed .chevron { transform: rotate(-90deg); }
+
+  /* ─── Stats bar ─── */
+  .stats-bar {
+    display: flex;
+    gap: var(--sp6);
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--sp4) var(--sp6);
+    align-items: center;
+  }
+  .stat-item { display: flex; flex-direction: column; gap: 2px; }
+  .stat-val {
+    font-family: var(--font-display);
+    font-size: 28px;
+    line-height: 1;
+    color: var(--text-primary);
+  }
+  .stat-val.pink { color: var(--brand-primary); }
+  .stat-val.teal { color: var(--status-success); }
+  .stat-val.amber { color: var(--brand-accent); }
+  .stat-val.red { color: var(--status-error); }
+  .stat-lbl {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .stat-sep {
+    width: 1px;
+    height: 32px;
+    background: var(--border-subtle);
+  }
+
+  /* ─── Scrollbar ─── */
+  .main::-webkit-scrollbar { width: 4px; }
+  .main::-webkit-scrollbar-track { background: transparent; }
+  .main::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
+
+  /* ─── Alert inline ─── */
+  .alert-inline {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp3);
+    padding: 10px var(--sp4);
+    border-radius: var(--radius-md);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .alert-error  { background: rgba(255,51,85,0.08);  border-left: 3px solid var(--status-error); color: var(--text-secondary); }
+  .alert-inline strong { color: var(--text-primary); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+</style>
+
+<div class="shell">
+
+  <!-- ─── Header ─── -->
+  <header class="header">
+    <span class="header-brand">ReportingGriego</span>
+    <div class="header-sep"></div>
+    <span class="header-subtitle">Panel de control</span>
+    <div class="header-right">
+      <!-- Bell -->
+      <button class="btn-icon" title="Notificaciones">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      </button>
+      <!-- Settings -->
+      <button class="btn-icon" title="Configuración">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ─── Sidebar ─── -->
+  <nav class="sidebar">
+    <span class="nav-section-label">Principal</span>
+    <a class="nav-item" href="#" onclick="return false">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Inicio
+    </a>
+    <a class="nav-item active" href="#" onclick="return false">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      Sitios
+      <span class="nav-badge">5</span>
+    </a>
+
+    <span class="nav-section-label">Informes</span>
+    <a class="nav-item" href="#" onclick="return false">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      Generar informe
+    </a>
+    <a class="nav-item" href="#" onclick="return false">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      Histórico
+    </a>
+
+    <span class="nav-section-label">Análisis</span>
+    <a class="nav-item" href="#" onclick="return false">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+      Oportunidades SEO
+    </a>
+    <a class="nav-item" href="#" onclick="return false">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Seguridad
+    </a>
+    <a class="nav-item" href="#" onclick="return false">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      Evidencias
+    </a>
+  </nav>
+
+  <!-- ─── Main ─── -->
+  <main class="main">
+
+    <!-- Page header -->
+    <div class="page-header">
+      <div class="page-title-group">
+        <h1 class="page-title">Sitios</h1>
+        <p class="page-desc">Gestión de sitios activos y sus fuentes de datos</p>
+      </div>
+      <button class="btn btn-primary" onclick="openDrawer()">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Añadir sitio
+      </button>
+    </div>
+
+    <!-- Stats bar -->
+    <div class="stats-bar">
+      <div class="stat-item">
+        <span class="stat-val pink">5</span>
+        <span class="stat-lbl">Sitios totales</span>
+      </div>
+      <div class="stat-sep"></div>
+      <div class="stat-item">
+        <span class="stat-val teal">4</span>
+        <span class="stat-lbl">Activos</span>
+      </div>
+      <div class="stat-sep"></div>
+      <div class="stat-item">
+        <span class="stat-val amber">1</span>
+        <span class="stat-lbl">Con alertas</span>
+      </div>
+      <div class="stat-sep"></div>
+      <div class="stat-item">
+        <span class="stat-val red">1</span>
+        <span class="stat-lbl">Fuente fallida</span>
+      </div>
+      <div class="stat-sep"></div>
+      <div class="stat-item">
+        <span class="stat-val" style="color:var(--text-muted)">1</span>
+        <span class="stat-lbl">Inactivos</span>
+      </div>
+    </div>
+
+    <!-- Filters row -->
+    <div class="filters">
+      <div class="filter-tabs">
+        <button class="tab active" onclick="setTab(this,'all')">Todos</button>
+        <button class="tab" onclick="setTab(this,'active')">Activos</button>
+        <button class="tab" onclick="setTab(this,'inactive')">Inactivos</button>
+      </div>
+      <div class="filter-right">
+        <div class="search-box">
+          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="color:var(--text-muted);flex-shrink:0"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" placeholder="Buscar sitio…" id="searchInput" oninput="filterSites()">
+        </div>
+      </div>
+    </div>
+
+    <!-- Sites table -->
+    <div class="sites-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Sitio</th>
+            <th>Estado</th>
+            <th>Fuentes de datos</th>
+            <th>Último informe</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="sitesBody">
+
+          <!-- Site 1 — all good -->
+          <tr data-status="active" data-name="elgriego.net">
+            <td class="site-name-cell">
+              <span class="site-name">elgriego.net</span>
+              <span class="site-url">https://elgriego.net</span>
+            </td>
+            <td><span class="badge badge-success"><span class="badge-dot"></span>Activo</span></td>
+            <td>
+              <div class="sources">
+                <div class="source-dot source-ok si-sc" title="Google Search Console — Conectado">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </div>
+                <div class="source-dot source-ok si-sk" title="Google Site Kit — Conectado">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                </div>
+                <div class="source-dot source-ok si-sq" title="Squirrly SEO — Conectado">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+                </div>
+                <div class="source-dot source-ok si-ps" title="PageSpeed Insights — Conectado">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"/></svg>
+                </div>
+                <div class="source-dot source-ok si-sn" title="Security Ninja — Conectado">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+              </div>
+            </td>
+            <td><span class="ts">jul 2026</span></td>
+            <td>
+              <div class="row-actions">
+                <button class="btn btn-ghost" style="padding:5px 10px;font-size:11px" onclick="openDrawer()">Configurar</button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Site 2 — error on one source -->
+          <tr data-status="active" data-name="diseñoandres.com" class="has-error">
+            <td class="site-name-cell">
+              <span class="site-name">diseñoandres.com</span>
+              <span class="site-url">https://diseñoandres.com</span>
+            </td>
+            <td><span class="badge badge-warning"><span class="badge-dot"></span>Alerta</span></td>
+            <td>
+              <div class="sources">
+                <div class="source-dot source-ok si-sc" title="Google Search Console — Conectado">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </div>
+                <div class="source-dot source-ok si-sk" title="Google Site Kit — Conectado">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                </div>
+                <div class="source-dot source-err si-sq" title="Squirrly SEO — Falló tras 3 reintentos">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                </div>
+                <div class="source-dot source-ok si-ps" title="PageSpeed Insights — Conectado">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"/></svg>
+                </div>
+                <div class="source-dot source-ok si-sn" title="Security Ninja — Conectado">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+              </div>
+            </td>
+            <td><span class="ts">jul 2026</span></td>
+            <td>
+              <div class="row-actions">
+                <button class="btn btn-ghost" style="padding:5px 10px;font-size:11px" onclick="openDrawer()">Configurar</button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Alert for error site -->
+          <tr data-status="active" data-name="_alert_diseño" style="background:rgba(255,51,85,0.03)">
+            <td colspan="5" style="padding:0 20px 10px">
+              <div class="alert-inline alert-error">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--status-error)" stroke-width="2" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <span><strong>Squirrly SEO no respondió</strong> tras 3 reintentos el 31 jul 2026. El resto del informe está completo. Se ha enviado notificación por email. <a href="#" onclick="return false" style="color:var(--brand-primary);text-decoration:none">Reintentar ahora</a></span>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Site 3 -->
+          <tr data-status="active" data-name="cafeteríabernal.es">
+            <td class="site-name-cell">
+              <span class="site-name">cafeteríabernal.es</span>
+              <span class="site-url">https://cafeteriabernal.es</span>
+            </td>
+            <td><span class="badge badge-success"><span class="badge-dot"></span>Activo</span></td>
+            <td>
+              <div class="sources">
+                <div class="source-dot source-ok si-sc" title="Google Search Console — Conectado">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </div>
+                <div class="source-dot source-ok si-sk" title="Google Site Kit — Conectado">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                </div>
+                <div class="source-dot source-ok si-sq" title="Squirrly SEO — Conectado">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+                </div>
+                <div class="source-dot source-none si-ps" title="PageSpeed Insights — No configurado">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </div>
+                <div class="source-dot source-ok si-sn" title="Security Ninja — Conectado">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+              </div>
+            </td>
+            <td><span class="ts">ago 2026</span></td>
+            <td>
+              <div class="row-actions">
+                <button class="btn btn-ghost" style="padding:5px 10px;font-size:11px" onclick="openDrawer()">Configurar</button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Site 4 -->
+          <tr data-status="active" data-name="fincalasierra.com">
+            <td class="site-name-cell">
+              <span class="site-name">fincalasierra.com</span>
+              <span class="site-url">https://fincalasierra.com</span>
+            </td>
+            <td><span class="badge badge-success"><span class="badge-dot"></span>Activo</span></td>
+            <td>
+              <div class="sources">
+                <div class="source-dot source-ok si-sc" title="Google Search Console — Conectado">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </div>
+                <div class="source-dot source-ok si-sk" title="Google Site Kit — Conectado">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                </div>
+                <div class="source-dot source-ok si-sq" title="Squirrly SEO — Conectado">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+                </div>
+                <div class="source-dot source-ok si-ps" title="PageSpeed Insights — Conectado">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"/></svg>
+                </div>
+                <div class="source-dot source-ok si-sn" title="Security Ninja — Conectado">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+              </div>
+            </td>
+            <td><span class="ts">ago 2026</span></td>
+            <td>
+              <div class="row-actions">
+                <button class="btn btn-ghost" style="padding:5px 10px;font-size:11px" onclick="openDrawer()">Configurar</button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Site 5 — inactive -->
+          <tr data-status="inactive" data-name="proyectoantiguo.es" class="inactive">
+            <td class="site-name-cell">
+              <span class="site-name">proyectoantiguo.es</span>
+              <span class="site-url">https://proyectoantiguo.es</span>
+            </td>
+            <td><span class="badge badge-neutral"><span class="badge-dot"></span>Inactivo</span></td>
+            <td>
+              <div class="sources">
+                <div class="source-dot source-none si-sc" title="Google Search Console — Deshabilitado"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+                <div class="source-dot source-none si-sk" title="Google Site Kit — Deshabilitado"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+                <div class="source-dot source-none si-sq" title="Squirrly SEO — Deshabilitado"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+                <div class="source-dot source-none si-ps" title="PageSpeed Insights — Deshabilitado"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+                <div class="source-dot source-none si-sn" title="Security Ninja — Deshabilitado"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+              </div>
+            </td>
+            <td><span class="ts">mar 2026</span></td>
+            <td>
+              <div class="row-actions">
+                <button class="btn btn-ghost" style="padding:5px 10px;font-size:11px">Reactivar</button>
+              </div>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+</div>
+
+<!-- ─── Drawer ─── -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="handleOverlayClick(event)">
+  <div class="drawer" id="drawer">
+    <div class="drawer-header">
+      <span class="drawer-title">Añadir sitio</span>
+      <button class="btn-icon" onclick="closeDrawer()">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="drawer-body">
+
+      <!-- Basic info -->
+      <div class="field">
+        <label class="field-label">Nombre del sitio</label>
+        <input class="input" type="text" placeholder="ej. elgriego.net">
+      </div>
+      <div class="field">
+        <label class="field-label">URL</label>
+        <input class="input input-mono" type="url" placeholder="https://ejemplo.com">
+        <span class="field-hint">Sin barra final. Debe ser la URL raíz del sitio.</span>
+      </div>
+
+      <!-- Divider -->
+      <div style="border-top:1px solid var(--border-subtle);margin:0 calc(var(--sp6)*-1)"></div>
+      <div>
+        <p style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)">Fuentes de datos</p>
+        <p style="font-size:12px;color:var(--text-muted);margin-top:4px;line-height:1.6">Configura las credenciales de API de cada fuente. Las fuentes sin configurar quedan pendientes y pueden añadirse después.</p>
+      </div>
+
+      <!-- Source: Search Console -->
+      <div class="source-block" id="sb-sc">
+        <div class="source-block-header" onclick="toggleSource('sb-sc')">
+          <div class="source-icon si-sc">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="#3DB8FF" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <span class="source-block-name">Google Search Console</span>
+          <span class="badge badge-neutral source-block-status">Sin configurar</span>
+          <svg class="chevron" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="source-block-body">
+          <div class="field">
+            <label class="field-label">Property ID</label>
+            <input class="input input-mono" type="text" placeholder="sc-domain:ejemplo.com">
+          </div>
+          <div class="field">
+            <label class="field-label">Credencial OAuth (JSON)</label>
+            <input class="input input-mono" type="text" placeholder="Ruta al archivo service_account.json">
+            <span class="field-hint">Necesita permiso de lectura en Search Console.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Source: Site Kit -->
+      <div class="source-block collapsed" id="sb-sk">
+        <div class="source-block-header" onclick="toggleSource('sb-sk')">
+          <div class="source-icon si-sk">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="#00C896" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <span class="source-block-name">Google Site Kit (Analytics)</span>
+          <span class="badge badge-neutral source-block-status">Sin configurar</span>
+          <svg class="chevron" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="source-block-body">
+          <div class="field">
+            <label class="field-label">GA4 Property ID</label>
+            <input class="input input-mono" type="text" placeholder="properties/123456789">
+          </div>
+          <div class="field">
+            <label class="field-label">Credencial OAuth (JSON)</label>
+            <input class="input input-mono" type="text" placeholder="Ruta al archivo service_account.json">
+          </div>
+        </div>
+      </div>
+
+      <!-- Source: Squirrly -->
+      <div class="source-block collapsed" id="sb-sq">
+        <div class="source-block-header" onclick="toggleSource('sb-sq')">
+          <div class="source-icon si-sq">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="#FF9E00" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+          </div>
+          <span class="source-block-name">Squirrly SEO / Ubersuggest</span>
+          <span class="badge badge-neutral source-block-status">Sin configurar</span>
+          <svg class="chevron" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="source-block-body">
+          <div class="field">
+            <label class="field-label">API Key</label>
+            <input class="input input-mono" type="password" placeholder="sk-xxxxxxxxxxxxxxxx">
+          </div>
+          <div class="field">
+            <label class="field-label">Dominio objetivo</label>
+            <input class="input input-mono" type="text" placeholder="ejemplo.com">
+          </div>
+        </div>
+      </div>
+
+      <!-- Source: PageSpeed -->
+      <div class="source-block collapsed" id="sb-ps">
+        <div class="source-block-header" onclick="toggleSource('sb-ps')">
+          <div class="source-icon si-ps">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="#7B2FF7" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"/></svg>
+          </div>
+          <span class="source-block-name">Google PageSpeed Insights</span>
+          <span class="badge badge-neutral source-block-status">Sin configurar</span>
+          <svg class="chevron" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="source-block-body">
+          <div class="field">
+            <label class="field-label">Google API Key</label>
+            <input class="input input-mono" type="password" placeholder="AIzaSy...">
+            <span class="field-hint">Se recogen puntuaciones de escritorio y móvil de forma independiente.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Source: Security Ninja -->
+      <div class="source-block collapsed" id="sb-sn">
+        <div class="source-block-header" onclick="toggleSource('sb-sn')">
+          <div class="source-icon si-sn">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="#E91E8C" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <span class="source-block-name">Security Ninja</span>
+          <span class="badge badge-neutral source-block-status">Sin configurar</span>
+          <svg class="chevron" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="source-block-body">
+          <div class="field">
+            <label class="field-label">API Key</label>
+            <input class="input input-mono" type="password" placeholder="sn_xxxxxxxxxxxxx">
+          </div>
+          <div class="field">
+            <label class="field-label">Site ID</label>
+            <input class="input input-mono" type="text" placeholder="ID del sitio en tu cuenta Security Ninja">
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="drawer-footer">
+      <button class="btn btn-ghost" onclick="closeDrawer()">Cancelar</button>
+      <button class="btn btn-primary">
+        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Guardar sitio
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openDrawer() {
+    document.getElementById('drawerOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    document.getElementById('drawerOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('drawerOverlay')) closeDrawer();
+  }
+
+  function toggleSource(id) {
+    document.getElementById(id).classList.toggle('collapsed');
+  }
+
+  function setTab(el, status) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    filterSites(status);
+  }
+  let currentTab = 'all';
+  function filterSites(status) {
+    if (status !== undefined) currentTab = status;
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    const rows = document.querySelectorAll('#sitesBody tr[data-status]');
+    rows.forEach(row => {
+      const name = (row.dataset.name || '').toLowerCase();
+      const rowStatus = row.dataset.status;
+      if (name.startsWith('_alert_')) { row.style.display = ''; return; }
+      const matchStatus = currentTab === 'all' || rowStatus === currentTab;
+      const matchSearch = !q || name.includes(q);
+      row.style.display = matchStatus && matchSearch ? '' : 'none';
+      // Also hide the alert row if its parent site is hidden
+      if (row.classList.contains('has-error')) {
+        const alertRow = row.nextElementSibling;
+        if (alertRow && alertRow.querySelector('.alert-inline')) {
+          alertRow.style.display = matchStatus && matchSearch ? '' : 'none';
+        }
+      }
+    });
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+</script>

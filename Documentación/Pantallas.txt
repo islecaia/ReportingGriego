@@ -1,0 +1,19 @@
+Leyendo el spec contra lo que la app tiene que hacer, las pantallas mínimas son 6. Sin solapamientos, sin pantallas de bienvenida:
+
+1. Sitios
+La lista de sitios activos y dados de baja. Desde aquí se da de alta un sitio nuevo y se configuran sus cinco fuentes de datos (credenciales de API por fuente). Cubre FR-009, FR-010, FR-014.
+
+2. Generar informe
+Pantalla de disparo manual del proceso mensual para uno o todos los sitios. Muestra el progreso fuente a fuente, los reintentos en curso y los errores que quedan marcados al terminar. Cubre FR-010, FR-011.
+
+3. Histórico de registros
+Tabla cronológica de filas mensuales filtrable por sitio. Muestra valores absolutos, variación respecto al mes anterior y el indicador visual de fila con error de fuente. Los ceros explícitos se ven aquí. Cubre FR-001, FR-002, FR-003, FR-011, FR-012, FR-013.
+
+4. Oportunidades SEO
+Lista de palabras clave con ≥50 búsquedas/mes fuera del top 3, filtrable por sitio y mes. Incluye los tres tramos de posición (top 100 / top 10 / top 3) como resumen numérico. Cubre FR-004, FR-005.
+
+5. Evidencias (capturas)
+Galería de capturas de pantalla asociadas a cada registro mensual, navegable por sitio y fecha. Cubre FR-008.
+
+6. Configuración
+Email de notificaciones de fallo y cualquier credencial global que aplique a todos los sitios (si la hay). Cubre la parte de aviso por email de FR-011.

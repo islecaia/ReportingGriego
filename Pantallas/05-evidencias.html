@@ -1,0 +1,651 @@
+<title>Evidencias · ReportingGriego</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+:root {
+  --bg-app:        #0F000A;
+  --bg-panel:      #1A000F;
+  --bg-card:       #240018;
+  --bg-input:      #1A000F;
+  --border-subtle: #4A0035;
+  --border-strong: #7A0058;
+  --brand-primary: #E91E8C;
+  --brand-ph:      #FF4DB8;
+  --brand-accent:  #FF9E00;
+  --status-ok:     #00C896;
+  --status-warn:   #FF9E00;
+  --status-err:    #FF3355;
+  --status-info:   #3DB8FF;
+  --status-neu:    #7A6A78;
+  --text-1:        #FFFFFF;
+  --text-2:        #C8A8BF;
+  --text-3:        #7A5A73;
+  --gradient-brand: linear-gradient(135deg,#E91E8C 0%,#7B2FF7 100%);
+  --gradient-rainbow: linear-gradient(180deg,#FF0054 0%,#FF4500 16%,#FFB800 33%,#00C896 50%,#3DB8FF 66%,#7B2FF7 83%,#E91E8C 100%);
+  --gradient-card: linear-gradient(160deg,#240018 0%,#1A000F 100%);
+  --font-d: 'Bebas Neue', Impact, sans-serif;
+  --font-u: 'Inter','Segoe UI',sans-serif;
+  --font-m: 'JetBrains Mono','Fira Code',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg-app);color:var(--text-1);font-family:var(--font-u);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
+
+/* Shell: header + (sidebar-nav | content) */
+.shell{display:grid;grid-template-columns:200px 1fr;grid-template-rows:52px 1fr;height:100vh;overflow:hidden}
+
+/* Header */
+.hdr{grid-column:1/-1;display:flex;align-items:center;gap:16px;padding:0 24px;background:var(--bg-panel);border-bottom:1px solid var(--border-subtle)}
+.hdr-brand{font-family:var(--font-d);font-size:22px;letter-spacing:.03em;background:var(--gradient-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;user-select:none}
+.hdr-sep{width:1px;height:22px;background:var(--border-subtle)}
+.hdr-sub{font-size:11px;color:var(--text-3);font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+.hdr-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.btn-icon{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;background:transparent;border:none;color:var(--text-2);cursor:pointer;transition:background 150ms}
+.btn-icon:hover{background:rgba(255,255,255,.06);color:var(--text-1)}
+
+/* Nav sidebar */
+.nav-sidebar{background:var(--bg-panel);border-right:1px solid var(--border-subtle);padding:24px 0;display:flex;flex-direction:column;overflow:hidden;position:relative}
+.nav-sidebar::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gradient-rainbow)}
+.nav-lbl{font-size:10px;font-weight:700;color:var(--text-3);letter-spacing:.14em;text-transform:uppercase;padding:12px 16px 8px 19px;margin-top:12px}
+.nav-lbl:first-child{margin-top:0}
+.nav-item{display:flex;align-items:center;gap:12px;padding:8px 16px 8px 19px;font-size:13px;font-weight:500;color:var(--text-2);cursor:pointer;border:none;background:transparent;width:100%;text-align:left;position:relative;transition:background 150ms,color 150ms;text-decoration:none}
+.nav-item:hover{background:rgba(255,255,255,.04);color:var(--text-1)}
+.nav-item.active{color:var(--brand-primary);background:rgba(233,30,140,.08)}
+.nav-item.active::after{content:'';position:absolute;right:0;top:6px;bottom:6px;width:2px;background:var(--brand-primary);border-radius:2px 0 0 2px}
+
+/* Content area: period panel + gallery */
+.content{display:grid;grid-template-columns:220px 1fr;overflow:hidden}
+
+/* Period panel */
+.period-panel{background:var(--bg-panel);border-right:1px solid var(--border-subtle);overflow-y:auto;padding:0}
+.period-panel::-webkit-scrollbar{width:3px}
+.period-panel::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:2px}
+.period-header{padding:16px 16px 10px;border-bottom:1px solid var(--border-subtle)}
+.period-header-lbl{font-size:10px;font-weight:700;color:var(--text-3);letter-spacing:.12em;text-transform:uppercase}
+.site-select{width:100%;margin-top:8px;background:var(--bg-input);border:1.5px solid var(--border-subtle);border-radius:8px;padding:6px 28px 6px 10px;color:var(--text-1);font:13px var(--font-u);cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%237A5A73' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center}
+.site-select:focus{outline:none;border-color:var(--brand-primary)}
+
+.period-list{padding:8px 0}
+.period-item{padding:10px 14px;cursor:pointer;transition:background 150ms;border-left:2px solid transparent;position:relative}
+.period-item:hover{background:rgba(255,255,255,.03)}
+.period-item.active{background:rgba(233,30,140,.07);border-left-color:var(--brand-primary)}
+.period-month{font-family:var(--font-d);font-size:17px;letter-spacing:.03em;line-height:1}
+.period-item.active .period-month{color:var(--brand-primary)}
+.period-meta{display:flex;align-items:center;justify-content:space-between;margin-top:3px}
+.period-count{font-size:10px;color:var(--text-3);font-family:var(--font-m)}
+.period-status{display:inline-flex;align-items:center;gap:2px;padding:1px 5px;border-radius:3px;font:700 9px var(--font-u);letter-spacing:.06em;text-transform:uppercase}
+.ps-ok {background:rgba(0,200,150,.12);color:var(--status-ok)}
+.ps-part{background:rgba(255,51,85,.12);color:var(--status-err)}
+
+/* Gallery main */
+.gallery-main{overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:18px}
+.gallery-main::-webkit-scrollbar{width:4px}
+.gallery-main::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:2px}
+
+.gallery-title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.gallery-title{font-family:var(--font-d);font-size:22px;letter-spacing:.04em;line-height:1}
+.gallery-subtitle{font-size:12px;color:var(--text-3);margin-top:3px}
+.gallery-actions{display:flex;gap:8px;flex-shrink:0}
+
+/* Source filter tabs */
+.src-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.src-tab{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font:600 11px var(--font-u);letter-spacing:.04em;cursor:pointer;border:1.5px solid var(--border-subtle);background:transparent;color:var(--text-3);transition:all 150ms}
+.src-tab:hover{color:var(--text-2);border-color:var(--border-strong)}
+.src-tab.active{border-color:transparent;color:#fff}
+.src-tab.active.sc {background:rgba(61,184,255,.2); border-color:var(--status-info);color:var(--status-info)}
+.src-tab.active.sk {background:rgba(0,200,150,.2); border-color:var(--status-ok);color:var(--status-ok)}
+.src-tab.active.sq {background:rgba(255,158,0,.2);  border-color:var(--status-warn);color:var(--status-warn)}
+.src-tab.active.ps {background:rgba(123,47,247,.2); border-color:#7B2FF7;color:#B070FF}
+.src-tab.active.sn {background:rgba(233,30,140,.2); border-color:var(--brand-primary);color:var(--brand-primary)}
+.src-tab.active.all{background:rgba(255,255,255,.06);border-color:var(--border-strong);color:var(--text-1)}
+.src-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+
+/* Capture grid */
+.cap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+
+/* Capture card */
+.cap-card{background:var(--gradient-card);border:1px solid var(--border-subtle);border-radius:12px;overflow:hidden;cursor:pointer;transition:border-color 150ms,transform 150ms,box-shadow 150ms;display:flex;flex-direction:column}
+.cap-card:hover{border-color:var(--border-strong);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.cap-card.has-err{border-left:3px solid var(--status-err)}
+.cap-thumb{width:100%;aspect-ratio:16/10;overflow:hidden;position:relative;background:#0a0009}
+.cap-thumb svg{width:100%;height:100%}
+.cap-overlay{position:absolute;inset:0;background:rgba(0,0,0,.0);display:flex;align-items:center;justify-content:center;transition:background 150ms}
+.cap-card:hover .cap-overlay{background:rgba(0,0,0,.35)}
+.cap-overlay-btn{opacity:0;transform:scale(.9);transition:opacity 150ms,transform 150ms;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.3);border-radius:8px;padding:7px 14px;font:700 11px var(--font-u);letter-spacing:.08em;color:#fff;text-transform:uppercase;backdrop-filter:blur(4px)}
+.cap-card:hover .cap-overlay-btn{opacity:1;transform:scale(1)}
+.cap-info{padding:12px 14px;flex:1;display:flex;flex-direction:column;gap:6px}
+.cap-src-row{display:flex;align-items:center;justify-content:space-between}
+.cap-src-name{font-size:12px;font-weight:600;color:var(--text-2)}
+.cap-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 6px;border-radius:3px;font:700 9px var(--font-u);letter-spacing:.07em;text-transform:uppercase}
+.cb-ok  {background:rgba(0,200,150,.14);color:var(--status-ok)}
+.cb-err {background:rgba(255,51,85,.14); color:var(--status-err)}
+.cap-ts {font-family:var(--font-m);font-size:10px;color:var(--text-3)}
+.cap-action{margin-top:6px}
+.btn-xs{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:6px;font:700 10px var(--font-u);letter-spacing:.07em;text-transform:uppercase;cursor:pointer;border:1.5px solid var(--border-subtle);background:transparent;color:var(--text-3);transition:all 150ms}
+.btn-xs:hover{border-color:var(--border-strong);color:var(--text-2)}
+
+/* Error card */
+.cap-card.err-card .cap-thumb{background:#160008;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px}
+.err-icon{color:var(--status-err);opacity:.6}
+.err-label{font-size:11px;color:var(--text-3);text-align:center;padding:0 12px}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:8px;border:none;font:700 11px/1 var(--font-u);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background 150ms,transform 100ms}
+.btn:active{transform:scale(.98)}
+.btn-ghost{background:transparent;color:var(--text-2);border:1.5px solid var(--border-subtle)}
+.btn-ghost:hover{background:rgba(255,255,255,.05);color:var(--text-1);border-color:var(--border-strong)}
+
+/* Lightbox */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:100;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity 200ms}
+.lightbox.open{opacity:1;pointer-events:all}
+.lb-panel{background:var(--bg-card);border:1px solid var(--border-strong);border-radius:16px;overflow:hidden;display:grid;grid-template-columns:1fr 280px;max-width:1000px;width:100%;max-height:90vh;box-shadow:0 24px 64px rgba(0,0,0,.6)}
+.lb-img{background:#0a0009;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.lb-img svg{width:100%;height:auto;display:block}
+.lb-meta{padding:24px;overflow-y:auto;display:flex;flex-direction:column;gap:16px;border-left:1px solid var(--border-subtle)}
+.lb-close{position:absolute;top:20px;right:20px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.1);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 150ms}
+.lb-close:hover{background:rgba(255,255,255,.2)}
+.lb-src-title{font-family:var(--font-d);font-size:20px;letter-spacing:.04em;line-height:1}
+.lb-period{font-size:12px;color:var(--text-3);margin-top:4px}
+.lb-sep{height:1px;background:var(--border-subtle)}
+.lb-meta-lbl{font-size:10px;font-weight:700;color:var(--text-3);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px}
+.lb-meta-val{font-family:var(--font-m);font-size:12px;color:var(--text-2)}
+.lb-actions{display:flex;flex-direction:column;gap:8px;margin-top:auto}
+</style>
+
+<!-- SVG thumbnails as reusable elements (not visible) -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <!-- Search Console thumbnail pattern -->
+    <symbol id="thumb-sc" viewBox="0 0 320 200">
+      <rect width="320" height="200" fill="#0D1117"/>
+      <!-- Top bar -->
+      <rect width="320" height="28" fill="#161B22"/>
+      <text x="10" y="18" fill="#3DB8FF" font-size="10" font-family="monospace">Search Console — elgriego.net</text>
+      <!-- Chart area -->
+      <rect x="8" y="36" width="304" height="90" fill="#0a0f18" rx="4"/>
+      <!-- Grid lines -->
+      <line x1="8" y1="66" x2="312" y2="66" stroke="#1a2230" stroke-width="1"/>
+      <line x1="8" y1="96" x2="312" y2="96" stroke="#1a2230" stroke-width="1"/>
+      <line x1="8" y1="120" x2="312" y2="120" stroke="#1a2230" stroke-width="1"/>
+      <!-- Impressions line -->
+      <polyline points="20,100 55,85 90,70 120,75 155,55 185,60 215,45 250,50 285,38 310,42" fill="none" stroke="#3DB8FF" stroke-width="2"/>
+      <polyline points="20,100 55,85 90,70 120,75 155,55 185,60 215,45 250,50 285,38 310,42 310,126 20,126" fill="#3DB8FF" fill-opacity=".08"/>
+      <!-- Clicks line -->
+      <polyline points="20,118 55,112 90,108 120,110 155,100 185,104 215,95 250,97 285,88 310,90" fill="none" stroke="#00C896" stroke-width="2"/>
+      <!-- Stats row -->
+      <rect x="8" y="134" width="92" height="40" fill="#111820" rx="4"/>
+      <text x="16" y="148" fill="#7A8A9A" font-size="7" font-family="monospace">IMPRESIONES</text>
+      <text x="16" y="163" fill="#3DB8FF" font-size="13" font-family="monospace" font-weight="bold">128.450</text>
+      <rect x="108" y="134" width="92" height="40" fill="#111820" rx="4"/>
+      <text x="116" y="148" fill="#7A8A9A" font-size="7" font-family="monospace">CLICS</text>
+      <text x="116" y="163" fill="#00C896" font-size="13" font-family="monospace" font-weight="bold">3.210</text>
+      <rect x="208" y="134" width="104" height="40" fill="#111820" rx="4"/>
+      <text x="216" y="148" fill="#7A8A9A" font-size="7" font-family="monospace">POS. MEDIA</text>
+      <text x="216" y="163" fill="#ffffff" font-size="13" font-family="monospace" font-weight="bold">18,4</text>
+      <!-- Table rows -->
+      <rect x="8" y="182" width="304" height="1" fill="#1a2230"/>
+    </symbol>
+
+    <!-- Site Kit thumbnail -->
+    <symbol id="thumb-sk" viewBox="0 0 320 200">
+      <rect width="320" height="200" fill="#0F1923"/>
+      <rect width="320" height="28" fill="#1a2535"/>
+      <text x="10" y="18" fill="#00C896" font-size="10" font-family="monospace">Google Site Kit — agosto 2026</text>
+      <!-- 3 small KPI boxes -->
+      <rect x="8" y="36" width="95" height="48" fill="#111f2e" rx="4"/>
+      <text x="16" y="52" fill="#5a7a9a" font-size="7" font-family="monospace">SESIONES</text>
+      <text x="16" y="68" fill="#00C896" font-size="14" font-family="monospace" font-weight="bold">14.230</text>
+      <rect x="111" y="36" width="95" height="48" fill="#111f2e" rx="4"/>
+      <text x="119" y="52" fill="#5a7a9a" font-size="7" font-family="monospace">USUARIOS</text>
+      <text x="119" y="68" fill="#ffffff" font-size="14" font-family="monospace" font-weight="bold">9.840</text>
+      <rect x="214" y="36" width="98" height="48" fill="#111f2e" rx="4"/>
+      <text x="222" y="52" fill="#5a7a9a" font-size="7" font-family="monospace">REBOTE</text>
+      <text x="222" y="68" fill="#FF9E00" font-size="14" font-family="monospace" font-weight="bold">38,4%</text>
+      <!-- Bar chart sessions by channel -->
+      <rect x="8" y="92" width="304" height="72" fill="#0a1520" rx="4"/>
+      <text x="14" y="104" fill="#5a7a9a" font-size="7" font-family="monospace">SESIONES POR CANAL</text>
+      <rect x="14" y="110" width="120" height="8" fill="#00C896" rx="2"/>
+      <text x="140" y="118" fill="#7aaa8a" font-size="7" font-family="monospace">Orgánico 62%</text>
+      <rect x="14" y="122" width="54" height="8" fill="#3DB8FF" rx="2"/>
+      <text x="74" y="130" fill="#5a7a9a" font-size="7" font-family="monospace">Directo 28%</text>
+      <rect x="14" y="134" width="18" height="8" fill="#7B2FF7" rx="2"/>
+      <text x="38" y="142" fill="#5a7a9a" font-size="7" font-family="monospace">Redes 9%</text>
+      <rect x="14" y="146" width="2" height="8" fill="#4a3548" rx="2"/>
+      <text x="22" y="154" fill="#4a3548" font-size="7" font-family="monospace">Referidos 0%</text>
+      <!-- Sparkline -->
+      <polyline points="8,190 40,182 72,185 104,175 136,170 168,172 200,162 232,165 264,158 304,155" fill="none" stroke="#00C896" stroke-width="1.5" stroke-dasharray="2,2"/>
+    </symbol>
+
+    <!-- Squirrly/Ubersuggest thumbnail -->
+    <symbol id="thumb-sq" viewBox="0 0 320 200">
+      <rect width="320" height="200" fill="#130a00"/>
+      <rect width="320" height="28" fill="#1e1000"/>
+      <text x="10" y="18" fill="#FF9E00" font-size="10" font-family="monospace">Squirrly SEO — palabras clave</text>
+      <!-- Table header -->
+      <rect x="8" y="36" width="304" height="18" fill="#1e1500" rx="2"/>
+      <text x="14" y="48" fill="#7a5a30" font-size="7" font-family="monospace">PALABRA CLAVE                    VOL    POS   CAMBIO</text>
+      <!-- Rows -->
+      <rect x="8" y="56" width="304" height="16" fill="#120e00" rx="2"/>
+      <text x="14" y="67" fill="#ffffff" font-size="8" font-family="monospace">agencia marketing digital</text>
+      <text x="220" y="67" fill="#ffffff" font-size="8" font-family="monospace">1.900</text>
+      <text x="258" y="67" fill="#FF9E00" font-size="8" font-family="monospace">5</text>
+      <text x="284" y="67" fill="#00C896" font-size="8" font-family="monospace">▲ 2</text>
+      <rect x="8" y="74" width="304" height="16" fill="#0f0b00" rx="2"/>
+      <text x="14" y="85" fill="#c8a890" font-size="8" font-family="monospace">crear tienda online</text>
+      <text x="220" y="85" fill="#c8a890" font-size="8" font-family="monospace">2.400</text>
+      <text x="258" y="85" fill="#c8a890" font-size="8" font-family="monospace">31</text>
+      <text x="278" y="85" fill="#7a5a30" font-size="8" font-family="monospace">— —</text>
+      <rect x="8" y="92" width="304" height="16" fill="#120e00" rx="2"/>
+      <text x="14" y="103" fill="#c8a890" font-size="8" font-family="monospace">diseño web profesional</text>
+      <text x="220" y="103" fill="#c8a890" font-size="8" font-family="monospace">1.300</text>
+      <text x="258" y="103" fill="#c8a890" font-size="8" font-family="monospace">14</text>
+      <text x="278" y="103" fill="#00C896" font-size="8" font-family="monospace">▲ 3</text>
+      <rect x="8" y="110" width="304" height="16" fill="#0f0b00" rx="2"/>
+      <text x="14" y="121" fill="#c8a890" font-size="8" font-family="monospace">marketing digital pymes</text>
+      <text x="220" y="121" fill="#c8a890" font-size="8" font-family="monospace">880</text>
+      <text x="254" y="121" fill="#FF9E00" font-size="8" font-family="monospace">9</text>
+      <text x="278" y="121" fill="#00C896" font-size="8" font-family="monospace">▲ 1</text>
+      <rect x="8" y="128" width="304" height="16" fill="#120e00" rx="2"/>
+      <text x="14" y="139" fill="#c8a890" font-size="8" font-family="monospace">agencia seo málaga</text>
+      <text x="220" y="139" fill="#c8a890" font-size="8" font-family="monospace">590</text>
+      <text x="254" y="139" fill="#FF9E00" font-size="8" font-family="monospace">7</text>
+      <text x="278" y="139" fill="#00C896" font-size="8" font-family="monospace">▲ 1</text>
+      <!-- Error banner at bottom — Squirrly failed in ago -->
+      <rect x="8" y="152" width="304" height="36" fill="rgba(255,51,85,0.12)" rx="4"/>
+      <rect x="8" y="152" width="3" height="36" fill="#FF3355" rx="2"/>
+      <text x="18" y="166" fill="#FF3355" font-size="8" font-family="monospace">⚠ Fuente no disponible al momento de la captura</text>
+      <text x="18" y="179" fill="#7a3a30" font-size="7" font-family="monospace">Captura parcial - 3 reintentos agotados</text>
+    </symbol>
+
+    <!-- PageSpeed thumbnail -->
+    <symbol id="thumb-ps" viewBox="0 0 320 200">
+      <rect width="320" height="200" fill="#0a0516"/>
+      <rect width="320" height="28" fill="#120a22"/>
+      <text x="10" y="18" fill="#B070FF" font-size="10" font-family="monospace">PageSpeed Insights — agosto 2026</text>
+      <!-- Desktop gauge -->
+      <g transform="translate(75,110)">
+        <circle cx="0" cy="0" r="46" fill="none" stroke="#1a0f30" stroke-width="8"/>
+        <circle cx="0" cy="0" r="46" fill="none" stroke="#00C896" stroke-width="8" stroke-dasharray="234 56" stroke-dashoffset="70" transform="rotate(-130)"/>
+        <text x="0" y="6" fill="#00C896" font-size="22" font-family="monospace" font-weight="bold" text-anchor="middle">91</text>
+        <text x="0" y="18" fill="#5a4a78" font-size="7" font-family="monospace" text-anchor="middle">ESCRITORIO</text>
+      </g>
+      <!-- Mobile gauge -->
+      <g transform="translate(215,110)">
+        <circle cx="0" cy="0" r="46" fill="none" stroke="#1a0f30" stroke-width="8"/>
+        <circle cx="0" cy="0" r="46" fill="none" stroke="#FF9E00" stroke-width="8" stroke-dasharray="186 104" stroke-dashoffset="70" transform="rotate(-130)"/>
+        <text x="0" y="6" fill="#FF9E00" font-size="22" font-family="monospace" font-weight="bold" text-anchor="middle">73</text>
+        <text x="0" y="18" fill="#5a4a78" font-size="7" font-family="monospace" text-anchor="middle">MÓVIL</text>
+      </g>
+      <!-- Labels top -->
+      <text x="75" y="52" fill="#5a4a78" font-size="7" font-family="monospace" text-anchor="middle">Escritorio</text>
+      <text x="215" y="52" fill="#5a4a78" font-size="7" font-family="monospace" text-anchor="middle">Móvil</text>
+      <!-- Metrics bottom -->
+      <rect x="8" y="165" width="145" height="26" fill="#0f0820" rx="3"/>
+      <text x="14" y="175" fill="#5a4a78" font-size="6" font-family="monospace">LCP</text>
+      <text x="14" y="184" fill="#00C896" font-size="8" font-family="monospace">1,4 s</text>
+      <text x="60" y="175" fill="#5a4a78" font-size="6" font-family="monospace">FID</text>
+      <text x="60" y="184" fill="#00C896" font-size="8" font-family="monospace">12 ms</text>
+      <text x="106" y="175" fill="#5a4a78" font-size="6" font-family="monospace">CLS</text>
+      <text x="106" y="184" fill="#00C896" font-size="8" font-family="monospace">0,04</text>
+      <rect x="161" y="165" width="151" height="26" fill="#0f0820" rx="3"/>
+      <text x="167" y="175" fill="#5a4a78" font-size="6" font-family="monospace">LCP</text>
+      <text x="167" y="184" fill="#FF9E00" font-size="8" font-family="monospace">3,2 s</text>
+      <text x="213" y="175" fill="#5a4a78" font-size="6" font-family="monospace">FID</text>
+      <text x="213" y="184" fill="#00C896" font-size="8" font-family="monospace">28 ms</text>
+      <text x="259" y="175" fill="#5a4a78" font-size="6" font-family="monospace">CLS</text>
+      <text x="259" y="184" fill="#00C896" font-size="8" font-family="monospace">0,08</text>
+    </symbol>
+
+    <!-- Security Ninja thumbnail -->
+    <symbol id="thumb-sn" viewBox="0 0 320 200">
+      <rect width="320" height="200" fill="#060014"/>
+      <rect width="320" height="28" fill="#0e0020"/>
+      <text x="10" y="18" fill="#E91E8C" font-size="10" font-family="monospace">Security Ninja — elgriego.net</text>
+      <!-- Shield icon large -->
+      <g transform="translate(24,42)">
+        <path d="M28,0 L56,10 L56,32 C56,48 42,58 28,64 C14,58 0,48 0,32 L0,10 Z" fill="none" stroke="#00C896" stroke-width="2" opacity=".4"/>
+        <text x="28" y="42" fill="#00C896" font-size="18" font-family="monospace" text-anchor="middle" font-weight="bold">✓</text>
+      </g>
+      <!-- Score -->
+      <text x="96" y="68" fill="#00C896" font-size="26" font-family="monospace" font-weight="bold">98/100</text>
+      <text x="96" y="82" fill="#5a3a60" font-size="8" font-family="monospace">Puntuación de seguridad</text>
+      <!-- Checklist -->
+      <rect x="8" y="116" width="304" height="14" fill="#0a001a" rx="2"/>
+      <text x="14" y="126" fill="#00C896" font-size="9" font-family="monospace">✓  WordPress actualizado (6.5.4)</text>
+      <rect x="8" y="132" width="304" height="14" fill="#07001b" rx="2"/>
+      <text x="14" y="142" fill="#00C896" font-size="9" font-family="monospace">✓  Plugins actualizados (24/24)</text>
+      <rect x="8" y="148" width="304" height="14" fill="#0a001a" rx="2"/>
+      <text x="14" y="158" fill="#00C896" font-size="9" font-family="monospace">✓  SSL válido — vence en 142 días</text>
+      <rect x="8" y="164" width="304" height="14" fill="#07001b" rx="2"/>
+      <text x="14" y="174" fill="#00C896" font-size="9" font-family="monospace">✓  0 incidencias de seguridad</text>
+      <rect x="8" y="180" width="304" height="14" fill="#0a001a" rx="2"/>
+      <text x="14" y="190" fill="#00C896" font-size="9" font-family="monospace">✓  Firewall activo · Sin accesos bloqueados</text>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="shell">
+
+<!-- Header -->
+<header class="hdr">
+  <span class="hdr-brand">ReportingGriego</span>
+  <div class="hdr-sep"></div>
+  <span class="hdr-sub">Panel de control</span>
+  <div class="hdr-right">
+    <button class="btn-icon"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></button>
+    <button class="btn-icon"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06-.06a2 2 0 1 1-2.83-2.83l.06.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
+  </div>
+</header>
+
+<!-- Nav sidebar -->
+<nav class="nav-sidebar">
+  <span class="nav-lbl">Principal</span>
+  <a class="nav-item" href="#" onclick="return false"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Inicio</a>
+  <a class="nav-item" href="#" onclick="return false"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Sitios</a>
+  <span class="nav-lbl">Informes</span>
+  <a class="nav-item" href="#" onclick="return false"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Generar informe</a>
+  <a class="nav-item" href="#" onclick="return false"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>Histórico</a>
+  <span class="nav-lbl">Análisis</span>
+  <a class="nav-item" href="#" onclick="return false"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>Oportunidades SEO</a>
+  <a class="nav-item" href="#" onclick="return false"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Seguridad</a>
+  <a class="nav-item active" href="#" onclick="return false"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Evidencias</a>
+</nav>
+
+<!-- Content area -->
+<div class="content">
+
+  <!-- Period navigation panel -->
+  <aside class="period-panel">
+    <div class="period-header">
+      <div class="period-header-lbl">Sitio</div>
+      <select class="site-select" onchange="return false">
+        <option selected>elgriego.net</option>
+        <option>diseñoandres.com</option>
+        <option>cafeteríabernal.es</option>
+        <option>fincalasierra.com</option>
+      </select>
+    </div>
+    <div class="period-list">
+
+      <div class="period-item active" onclick="setPeriod(this,'ago-2026')">
+        <div class="period-month">ago 2026</div>
+        <div class="period-meta">
+          <span class="period-count">4/5 capturas</span>
+          <span class="period-status ps-part">Parcial</span>
+        </div>
+      </div>
+
+      <div class="period-item" onclick="setPeriod(this,'jul-2026')">
+        <div class="period-month">jul 2026</div>
+        <div class="period-meta">
+          <span class="period-count">5/5 capturas</span>
+          <span class="period-status ps-ok">Completo</span>
+        </div>
+      </div>
+
+      <div class="period-item" onclick="setPeriod(this,'jun-2026')">
+        <div class="period-month">jun 2026</div>
+        <div class="period-meta">
+          <span class="period-count">5/5 capturas</span>
+          <span class="period-status ps-ok">Completo</span>
+        </div>
+      </div>
+
+      <div class="period-item" onclick="setPeriod(this,'may-2026')">
+        <div class="period-month">may 2026</div>
+        <div class="period-meta">
+          <span class="period-count">5/5 capturas</span>
+          <span class="period-status ps-ok">Completo</span>
+        </div>
+      </div>
+
+      <div class="period-item" onclick="setPeriod(this,'abr-2026')">
+        <div class="period-month">abr 2026</div>
+        <div class="period-meta">
+          <span class="period-count">5/5 capturas</span>
+          <span class="period-status ps-ok">Completo</span>
+        </div>
+      </div>
+
+      <div class="period-item" onclick="setPeriod(this,'mar-2026')">
+        <div class="period-month">mar 2026</div>
+        <div class="period-meta">
+          <span class="period-count">5/5 capturas</span>
+          <span class="period-status ps-ok">Completo</span>
+        </div>
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- Gallery main -->
+  <section class="gallery-main">
+
+    <div class="gallery-title-row">
+      <div>
+        <h1 class="gallery-title">Agosto 2026 — elgriego.net</h1>
+        <p class="gallery-subtitle">Capturas tomadas el 31 ago 2026 a las 03:14 UTC · 4 de 5 fuentes capturadas</p>
+      </div>
+      <div class="gallery-actions">
+        <button class="btn btn-ghost">
+          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Exportar ZIP
+        </button>
+      </div>
+    </div>
+
+    <!-- Source filter tabs -->
+    <div class="src-tabs">
+      <button class="src-tab active all" onclick="setSrc(this,'all')">Todas las fuentes</button>
+      <button class="src-tab sc" onclick="setSrc(this,'sc')"><span class="src-dot" style="color:var(--status-info)"></span>Search Console</button>
+      <button class="src-tab sk" onclick="setSrc(this,'sk')"><span class="src-dot" style="color:var(--status-ok)"></span>Site Kit</button>
+      <button class="src-tab sq" onclick="setSrc(this,'sq')"><span class="src-dot" style="color:var(--status-warn)"></span>Squirrly</button>
+      <button class="src-tab ps" onclick="setSrc(this,'ps')"><span class="src-dot" style="color:#B070FF"></span>PageSpeed</button>
+      <button class="src-tab sn" onclick="setSrc(this,'sn')"><span class="src-dot" style="color:var(--brand-primary)"></span>Security Ninja</button>
+    </div>
+
+    <!-- Capture grid -->
+    <div class="cap-grid" id="capGrid">
+
+      <!-- Search Console -->
+      <div class="cap-card" data-src="sc" onclick="openLightbox('sc')">
+        <div class="cap-thumb" style="position:relative">
+          <svg viewBox="0 0 320 200" width="100%" height="100%"><use href="#thumb-sc"/></svg>
+          <div class="cap-overlay"><button class="cap-overlay-btn">Ver completa</button></div>
+        </div>
+        <div class="cap-info">
+          <div class="cap-src-row">
+            <span class="cap-src-name" style="color:var(--status-info)">Search Console</span>
+            <span class="cap-badge cb-ok"><svg width="6" height="6" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>Capturada</span>
+          </div>
+          <div class="cap-ts">31 ago 2026 · 03:14:08 UTC</div>
+          <div class="cap-action">
+            <button class="btn-xs" onclick="event.stopPropagation();openLightbox('sc')">
+              <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+              Ver completa
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Site Kit -->
+      <div class="cap-card" data-src="sk" onclick="openLightbox('sk')">
+        <div class="cap-thumb" style="position:relative">
+          <svg viewBox="0 0 320 200" width="100%" height="100%"><use href="#thumb-sk"/></svg>
+          <div class="cap-overlay"><button class="cap-overlay-btn">Ver completa</button></div>
+        </div>
+        <div class="cap-info">
+          <div class="cap-src-row">
+            <span class="cap-src-name" style="color:var(--status-ok)">Site Kit</span>
+            <span class="cap-badge cb-ok"><svg width="6" height="6" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>Capturada</span>
+          </div>
+          <div class="cap-ts">31 ago 2026 · 03:14:31 UTC</div>
+          <div class="cap-action">
+            <button class="btn-xs" onclick="event.stopPropagation();openLightbox('sk')">
+              <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+              Ver completa
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Squirrly — FAILED -->
+      <div class="cap-card has-err" data-src="sq" onclick="return false" style="cursor:default">
+        <div class="cap-thumb err-card" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:120px">
+          <svg class="err-icon" width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span class="err-label">Fuente no disponible. 3 reintentos agotados. Sin captura.</span>
+        </div>
+        <div class="cap-info">
+          <div class="cap-src-row">
+            <span class="cap-src-name" style="color:var(--status-err)">Squirrly SEO</span>
+            <span class="cap-badge cb-err"><svg width="6" height="6" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>Sin captura</span>
+          </div>
+          <div class="cap-ts" style="color:var(--status-err);opacity:.7">Fallo · 03:16:02 — 03:18:47 UTC</div>
+          <div style="font-size:11px;color:var(--text-3);margin-top:4px;line-height:1.5">Notificación enviada por email. Reintentar manualmente o esperar al próximo ciclo.</div>
+        </div>
+      </div>
+
+      <!-- PageSpeed -->
+      <div class="cap-card" data-src="ps" onclick="openLightbox('ps')">
+        <div class="cap-thumb" style="position:relative">
+          <svg viewBox="0 0 320 200" width="100%" height="100%"><use href="#thumb-ps"/></svg>
+          <div class="cap-overlay"><button class="cap-overlay-btn">Ver completa</button></div>
+        </div>
+        <div class="cap-info">
+          <div class="cap-src-row">
+            <span class="cap-src-name" style="color:#B070FF">PageSpeed Insights</span>
+            <span class="cap-badge cb-ok"><svg width="6" height="6" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>Capturada</span>
+          </div>
+          <div class="cap-ts">31 ago 2026 · 03:19:14 UTC</div>
+          <div class="cap-action">
+            <button class="btn-xs" onclick="event.stopPropagation();openLightbox('ps')">
+              <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+              Ver completa
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Security Ninja -->
+      <div class="cap-card" data-src="sn" onclick="openLightbox('sn')">
+        <div class="cap-thumb" style="position:relative">
+          <svg viewBox="0 0 320 200" width="100%" height="100%"><use href="#thumb-sn"/></svg>
+          <div class="cap-overlay"><button class="cap-overlay-btn">Ver completa</button></div>
+        </div>
+        <div class="cap-info">
+          <div class="cap-src-row">
+            <span class="cap-src-name" style="color:var(--brand-primary)">Security Ninja</span>
+            <span class="cap-badge cb-ok"><svg width="6" height="6" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>Capturada</span>
+          </div>
+          <div class="cap-ts">31 ago 2026 · 03:19:58 UTC</div>
+          <div class="cap-action">
+            <button class="btn-xs" onclick="event.stopPropagation();openLightbox('sn')">
+              <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+              Ver completa
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lb-close" onclick="closeLightbox(null)" style="position:fixed;top:20px;right:20px">
+    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <div class="lb-panel" onclick="event.stopPropagation()">
+    <div class="lb-img" id="lbImg"></div>
+    <div class="lb-meta" id="lbMeta"></div>
+  </div>
+</div>
+
+<script>
+var SOURCES = {
+  sc: {
+    name: 'Search Console',
+    color: 'var(--status-info)',
+    sym: 'thumb-sc',
+    ts: '31 ago 2026 · 03:14:08 UTC',
+    size: '1.240 × 860 px · PNG · 184 KB',
+    desc: 'Panel principal de Google Search Console mostrando impresiones, clics y posición media del último mes.',
+    url: 'https://search.google.com/search-console',
+  },
+  sk: {
+    name: 'Site Kit (Google Analytics)',
+    color: 'var(--status-ok)',
+    sym: 'thumb-sk',
+    ts: '31 ago 2026 · 03:14:31 UTC',
+    size: '1.240 × 860 px · PNG · 212 KB',
+    desc: 'Panel de Site Kit con sesiones, usuarios y desglose de canales de tráfico del mes.',
+    url: 'https://analytics.google.com',
+  },
+  ps: {
+    name: 'PageSpeed Insights',
+    color: '#B070FF',
+    sym: 'thumb-ps',
+    ts: '31 ago 2026 · 03:19:14 UTC',
+    size: '1.240 × 860 px · PNG · 198 KB',
+    desc: 'Resultado de PageSpeed Insights para escritorio (91) y móvil (73) con métricas Core Web Vitals.',
+    url: 'https://pagespeed.web.dev',
+  },
+  sn: {
+    name: 'Security Ninja',
+    color: 'var(--brand-primary)',
+    sym: 'thumb-sn',
+    ts: '31 ago 2026 · 03:19:58 UTC',
+    size: '1.240 × 860 px · PNG · 156 KB',
+    desc: 'Informe de Security Ninja: puntuación 98/100, sin incidencias, plugins y WordPress al día.',
+    url: 'https://wp-elgriego.net/wp-admin/admin.php?page=security-ninja',
+  },
+};
+
+function openLightbox(src) {
+  var s = SOURCES[src];
+  if (!s) return;
+  var lb = document.getElementById('lightbox');
+  document.getElementById('lbImg').innerHTML =
+    '<svg viewBox="0 0 320 200" style="width:100%;height:auto;display:block"><use href="#thumb-' + src + '"/></svg>';
+  document.getElementById('lbMeta').innerHTML =
+    '<div class="lb-src-title" style="color:' + s.color + '">' + s.name + '</div>' +
+    '<div class="lb-period">elgriego.net · agosto 2026</div>' +
+    '<div class="lb-sep"></div>' +
+    '<div><div class="lb-meta-lbl">Timestamp</div><div class="lb-meta-val">' + s.ts + '</div></div>' +
+    '<div><div class="lb-meta-lbl">Archivo</div><div class="lb-meta-val">' + s.size + '</div></div>' +
+    '<div><div class="lb-meta-lbl">Descripción</div><div style="font-size:12px;color:var(--text-2);line-height:1.6">' + s.desc + '</div></div>' +
+    '<div class="lb-sep"></div>' +
+    '<div class="lb-actions">' +
+    '<button class="btn btn-ghost" style="width:100%;justify-content:center" onclick="return false">' +
+    '<svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
+    'Descargar PNG</button>' +
+    '</div>';
+  lb.classList.add('open');
+}
+
+function closeLightbox(e) {
+  if (e && e.target !== document.getElementById('lightbox')) return;
+  document.getElementById('lightbox').classList.remove('open');
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
+});
+
+function setSrc(el, src) {
+  document.querySelectorAll('.src-tab').forEach(function(t) { t.classList.remove('active'); });
+  el.classList.add('active');
+  var cards = document.querySelectorAll('#capGrid .cap-card');
+  cards.forEach(function(card) {
+    card.style.display = (src === 'all' || card.dataset.src === src) ? '' : 'none';
+  });
+}
+
+function setPeriod(el, period) {
+  document.querySelectorAll('.period-item').forEach(function(i) { i.classList.remove('active'); });
+  el.classList.add('active');
+  // In production this reloads the gallery; visual affordance here
+}
+</script>

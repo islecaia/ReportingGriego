@@ -1,0 +1,702 @@
+<title>Configuración · ReportingGriego</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+:root {
+  --bg-app:        #0F000A;
+  --bg-panel:      #1A000F;
+  --bg-card:       #240018;
+  --bg-input:      #1A000F;
+  --border-subtle: #4A0035;
+  --border-strong: #7A0058;
+  --brand-primary: #E91E8C;
+  --brand-ph:      #FF4DB8;
+  --brand-dim:     #7A1050;
+  --brand-accent:  #FF9E00;
+  --status-ok:     #00C896;
+  --status-warn:   #FF9E00;
+  --status-err:    #FF3355;
+  --status-info:   #3DB8FF;
+  --status-neu:    #7A6A78;
+  --text-1:        #FFFFFF;
+  --text-2:        #C8A8BF;
+  --text-3:        #7A5A73;
+  --gradient-brand: linear-gradient(135deg,#E91E8C 0%,#7B2FF7 100%);
+  --gradient-rainbow: linear-gradient(180deg,#FF0054 0%,#FF4500 16%,#FFB800 33%,#00C896 50%,#3DB8FF 66%,#7B2FF7 83%,#E91E8C 100%);
+  --gradient-card: linear-gradient(160deg,#240018 0%,#1A000F 100%);
+  --font-d: 'Bebas Neue', Impact, sans-serif;
+  --font-u: 'Inter','Segoe UI',sans-serif;
+  --font-m: 'JetBrains Mono','Fira Code',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg-app);color:var(--text-1);font-family:var(--font-u);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.shell{display:grid;grid-template-columns:200px 1fr;grid-template-rows:52px 1fr;height:100vh;overflow:hidden}
+
+/* Header */
+.hdr{grid-column:1/-1;display:flex;align-items:center;gap:16px;padding:0 24px;background:var(--bg-panel);border-bottom:1px solid var(--border-subtle);z-index:10}
+.hdr-brand{font-family:var(--font-d);font-size:22px;letter-spacing:.03em;background:var(--gradient-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;user-select:none}
+.hdr-sep{width:1px;height:22px;background:var(--border-subtle)}
+.hdr-sub{font-size:11px;color:var(--text-3);font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+.hdr-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.btn-icon{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;background:transparent;border:none;color:var(--text-2);cursor:pointer;transition:background 150ms}
+.btn-icon:hover{background:rgba(255,255,255,.06);color:var(--text-1)}
+
+/* Sidebar */
+.sidebar{background:var(--bg-panel);border-right:1px solid var(--border-subtle);padding:24px 0;display:flex;flex-direction:column;overflow:hidden;position:relative}
+.sidebar::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gradient-rainbow)}
+.nav-lbl{font-size:10px;font-weight:700;color:var(--text-3);letter-spacing:.14em;text-transform:uppercase;padding:12px 16px 8px 19px;margin-top:12px}
+.nav-lbl:first-child{margin-top:0}
+.nav-item{display:flex;align-items:center;gap:12px;padding:8px 16px 8px 19px;font-size:13px;font-weight:500;color:var(--text-2);cursor:pointer;border:none;background:transparent;width:100%;text-align:left;position:relative;transition:background 150ms,color 150ms;text-decoration:none}
+.nav-item:hover{background:rgba(255,255,255,.04);color:var(--text-1)}
+.nav-item.active{color:var(--brand-primary);background:rgba(233,30,140,.08)}
+.nav-item.active::after{content:'';position:absolute;right:0;top:6px;bottom:6px;width:2px;background:var(--brand-primary);border-radius:2px 0 0 2px}
+
+/* Main */
+.main{overflow-y:auto;padding:24px 32px 120px;display:flex;flex-direction:column;gap:0}
+.main::-webkit-scrollbar{width:4px}
+.main::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:2px}
+
+.page-title{font-family:var(--font-d);font-size:22px;letter-spacing:.04em;line-height:1;margin-bottom:4px}
+.page-desc{font-size:12px;color:var(--text-3);margin-bottom:28px}
+
+/* Settings card */
+.cfg-card{background:var(--gradient-card);border:1px solid var(--border-subtle);border-radius:12px;overflow:hidden;margin-bottom:16px}
+.cfg-card-hdr{display:flex;align-items:center;gap:12px;padding:18px 22px;border-bottom:1px solid var(--border-subtle);background:rgba(0,0,0,.15)}
+.cfg-card-icon{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;flex-shrink:0}
+.cfg-card-title{font-family:var(--font-d);font-size:17px;letter-spacing:.04em;line-height:1}
+.cfg-card-desc{font-size:11px;color:var(--text-3);margin-top:3px}
+.cfg-card-badge{margin-left:auto;display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font:700 10px var(--font-u);letter-spacing:.07em;text-transform:uppercase}
+.cb-ok  {background:rgba(0,200,150,.14);color:var(--status-ok)}
+.cb-warn{background:rgba(255,158,0,.14); color:var(--status-warn)}
+.cb-err {background:rgba(255,51,85,.14); color:var(--status-err)}
+.cb-neu {background:rgba(122,106,120,.14);color:var(--status-neu)}
+
+/* Field rows */
+.cfg-body{padding:8px 0}
+.cfg-row{display:flex;align-items:flex-start;gap:20px;padding:14px 22px;border-bottom:1px solid rgba(74,0,53,.5)}
+.cfg-row:last-child{border-bottom:none}
+.cfg-row.separator{border-bottom:1px solid var(--border-subtle)}
+.cfg-label-col{flex:1;min-width:0}
+.cfg-label{font-size:13px;font-weight:600;color:var(--text-2)}
+.cfg-hint{font-size:11px;color:var(--text-3);margin-top:3px;line-height:1.6;max-width:380px}
+.cfg-control{flex-shrink:0;display:flex;align-items:center;gap:8px}
+
+/* Toggle switch */
+.toggle-wrap{display:flex;align-items:center;gap:10px;cursor:pointer}
+.toggle{position:relative;width:40px;height:22px;cursor:pointer}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.toggle-track{position:absolute;inset:0;background:var(--border-subtle);border-radius:11px;transition:background 200ms}
+.toggle input:checked ~ .toggle-track{background:var(--brand-primary)}
+.toggle-thumb{position:absolute;top:3px;left:3px;width:16px;height:16px;background:#fff;border-radius:50%;transition:transform 200ms;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+.toggle input:checked ~ .toggle-thumb{transform:translateX(18px)}
+.toggle-label{font-size:12px;font-weight:600;color:var(--text-3);transition:color 150ms;user-select:none}
+.toggle input:checked ~ ~ .toggle-label{color:var(--status-ok)}
+
+/* Text input */
+.inp{width:100%;background:var(--bg-input);border:1.5px solid var(--border-subtle);border-radius:8px;padding:8px 12px;color:var(--text-1);font:13px var(--font-u);transition:border-color 150ms,box-shadow 150ms}
+.inp:focus{outline:none;border-color:var(--brand-primary);box-shadow:0 0 0 3px rgba(233,30,140,.16)}
+.inp::placeholder{color:var(--text-3)}
+.inp.mono{font-family:var(--font-m);font-size:12px;letter-spacing:.02em}
+.inp-wide{width:320px}
+.inp-medium{width:220px}
+.inp-narrow{width:90px}
+
+/* Input with icon button */
+.inp-wrap{position:relative;display:inline-flex;align-items:center}
+.inp-wrap .inp{padding-right:36px}
+.inp-eye{position:absolute;right:10px;background:transparent;border:none;color:var(--text-3);cursor:pointer;padding:2px;display:flex;align-items:center;transition:color 150ms}
+.inp-eye:hover{color:var(--text-2)}
+
+/* Select */
+.sel{background:var(--bg-input);border:1.5px solid var(--border-subtle);border-radius:8px;padding:8px 30px 8px 12px;color:var(--text-1);font:13px var(--font-u);cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%237A5A73' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;transition:border-color 150ms}
+.sel:focus{outline:none;border-color:var(--brand-primary);box-shadow:0 0 0 3px rgba(233,30,140,.16)}
+
+/* Checkbox row */
+.chk-group{display:flex;flex-direction:column;gap:8px;padding:0}
+.chk-row{display:flex;align-items:flex-start;gap:10px;cursor:pointer;padding:4px 0}
+.chk-row input[type=checkbox]{width:15px;height:15px;accent-color:var(--brand-primary);cursor:pointer;flex-shrink:0;margin-top:1px}
+.chk-text{font-size:12px;color:var(--text-2);line-height:1.5}
+.chk-text b{color:var(--text-1)}
+
+/* Tag input (multiple emails) */
+.tags-wrap{display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:var(--bg-input);border:1.5px solid var(--border-subtle);border-radius:8px;padding:6px 10px;min-width:320px;cursor:text;transition:border-color 150ms,box-shadow 150ms}
+.tags-wrap:focus-within{border-color:var(--brand-primary);box-shadow:0 0 0 3px rgba(233,30,140,.16)}
+.tag{display:inline-flex;align-items:center;gap:5px;background:rgba(233,30,140,.14);border:1px solid rgba(233,30,140,.3);border-radius:4px;padding:2px 8px;font-size:12px;font-family:var(--font-m);color:var(--text-1)}
+.tag-rm{background:transparent;border:none;color:rgba(255,255,255,.3);cursor:pointer;font-size:14px;line-height:1;padding:0}
+.tag-rm:hover{color:var(--status-err)}
+.tags-input{background:transparent;border:none;outline:none;color:var(--text-1);font:12px var(--font-m);min-width:120px;flex:1}
+.tags-input::placeholder{color:var(--text-3);font-family:var(--font-u)}
+
+/* Number stepper */
+.stepper{display:flex;align-items:center;gap:0;border:1.5px solid var(--border-subtle);border-radius:8px;overflow:hidden}
+.stepper-btn{width:32px;height:36px;background:var(--bg-input);border:none;color:var(--text-2);font-size:16px;cursor:pointer;transition:background 150ms,color 150ms;display:flex;align-items:center;justify-content:center}
+.stepper-btn:hover{background:rgba(255,255,255,.06);color:var(--text-1)}
+.stepper-val{width:44px;height:36px;background:var(--bg-input);border:none;border-left:1px solid var(--border-subtle);border-right:1px solid var(--border-subtle);color:var(--text-1);font:500 14px var(--font-m);text-align:center}
+.stepper-val:focus{outline:none}
+
+/* Inline alert */
+.inline-alert{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-radius:8px;border-left:4px solid var(--status-info);background:rgba(61,184,255,.07);margin:0 22px 8px}
+.inline-alert.warn{border-left-color:var(--status-warn);background:rgba(255,158,0,.07)}
+.alert-text{font-size:12px;color:var(--text-2);line-height:1.6}
+.alert-text b{color:var(--text-1)}
+
+/* SMTP collapsible block */
+.smtp-block{padding:0 22px 14px}
+.smtp-grid{display:grid;grid-template-columns:1fr 120px;gap:10px;margin-top:10px}
+.smtp-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px}
+.field-lbl{font-size:10px;font-weight:700;color:var(--text-3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+
+/* Test button */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:8px;border:none;font:700 11px/1 var(--font-u);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background 150ms,transform 100ms,color 150ms;white-space:nowrap}
+.btn:active{transform:scale(.98)}
+.btn-ghost{background:transparent;color:var(--text-2);border:1.5px solid var(--border-subtle)}
+.btn-ghost:hover{background:rgba(255,255,255,.05);color:var(--text-1);border-color:var(--border-strong)}
+.btn-primary{background:var(--brand-primary);color:#fff}
+.btn-primary:hover{background:var(--brand-ph)}
+.btn-danger{background:transparent;color:var(--status-err);border:1.5px solid var(--status-err)}
+.btn-danger:hover{background:rgba(255,51,85,.08)}
+.btn-ok{background:rgba(0,200,150,.14);color:var(--status-ok);border:1px solid rgba(0,200,150,.3)}
+.btn-sm{padding:5px 10px;font-size:10px}
+
+/* Test result flash */
+.test-flash{display:none;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--status-ok)}
+.test-flash.visible{display:flex}
+
+/* Save bar */
+.save-bar{position:fixed;bottom:0;left:200px;right:0;padding:14px 32px;background:rgba(26,0,15,.92);border-top:1px solid var(--border-strong);backdrop-filter:blur(12px);display:flex;align-items:center;gap:14px;z-index:50;transform:translateY(100%);transition:transform 250ms ease}
+.save-bar.visible{transform:translateY(0)}
+.save-bar-msg{font-size:12px;color:var(--text-3);flex:1}
+.save-bar-msg b{color:var(--text-2)}
+
+/* Danger zone */
+.danger-row{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;border-bottom:1px solid rgba(74,0,53,.5)}
+.danger-row:last-child{border-bottom:none}
+.danger-label{font-size:13px;font-weight:600;color:var(--text-2)}
+.danger-hint{font-size:11px;color:var(--text-3);margin-top:2px}
+
+/* About card */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.about-item{padding:14px 22px;border-bottom:1px solid rgba(74,0,53,.5);border-right:1px solid rgba(74,0,53,.5)}
+.about-item:nth-child(even){border-right:none}
+.about-item:nth-last-child(-n+2){border-bottom:none}
+.about-lbl{font-size:10px;font-weight:700;color:var(--text-3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.about-val{font-family:var(--font-m);font-size:12px;color:var(--text-2)}
+.about-val.brand{background:var(--gradient-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:500}
+</style>
+
+<div class="shell">
+
+<!-- Header -->
+<header class="hdr">
+  <span class="hdr-brand">ReportingGriego</span>
+  <div class="hdr-sep"></div>
+  <span class="hdr-sub">Panel de control</span>
+  <div class="hdr-right">
+    <button class="btn-icon"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></button>
+    <button class="btn-icon" style="color:var(--brand-primary)"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06-.06a2 2 0 1 1-2.83-2.83l.06.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
+  </div>
+</header>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <span class="nav-lbl">Principal</span>
+  <a class="nav-item" href="#" onclick="return false"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Inicio</a>
+  <a class="nav-item" href="#" onclick="return false"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Sitios</a>
+  <span class="nav-lbl">Informes</span>
+  <a class="nav-item" href="#" onclick="return false"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Generar informe</a>
+  <a class="nav-item" href="#" onclick="return false"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>Histórico</a>
+  <span class="nav-lbl">Análisis</span>
+  <a class="nav-item" href="#" onclick="return false"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>Oportunidades SEO</a>
+  <a class="nav-item" href="#" onclick="return false"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Seguridad</a>
+  <a class="nav-item" href="#" onclick="return false"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Evidencias</a>
+  <span class="nav-lbl">Sistema</span>
+  <a class="nav-item active" href="#" onclick="return false"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06-.06a2 2 0 1 1-2.83-2.83l.06.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Configuración</a>
+</nav>
+
+<!-- Main -->
+<main class="main" id="main">
+
+  <h1 class="page-title">Configuración</h1>
+  <p class="page-desc">Ajustes globales · los cambios por sitio se gestionan en cada ficha de sitio</p>
+
+  <!-- ─── 1. NOTIFICACIONES ─── -->
+  <div class="cfg-card">
+    <div class="cfg-card-hdr">
+      <div class="cfg-card-icon" style="background:rgba(61,184,255,.12)">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--status-info)" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      <div>
+        <div class="cfg-card-title">Notificaciones de fallo</div>
+        <div class="cfg-card-desc">Aviso automático por email cuando una fuente de datos falla tras los reintentos (FR-011)</div>
+      </div>
+      <span class="cfg-card-badge cb-ok" id="notifBadge">
+        <svg width="6" height="6" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
+        Activo
+      </span>
+    </div>
+    <div class="cfg-body">
+
+      <!-- Enable toggle -->
+      <div class="cfg-row separator">
+        <div class="cfg-label-col">
+          <div class="cfg-label">Notificaciones activadas</div>
+          <div class="cfg-hint">Cuando está activo, se envía un email al detectar un fallo irrecuperable en cualquier fuente del proceso mensual.</div>
+        </div>
+        <div class="cfg-control">
+          <label class="toggle-wrap" for="notifToggle">
+            <div class="toggle">
+              <input type="checkbox" id="notifToggle" checked onchange="onChange();updateNotifBadge()">
+              <div class="toggle-track"></div>
+              <div class="toggle-thumb"></div>
+            </div>
+            <span class="toggle-label" id="notifLabel">Activo</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Recipient emails -->
+      <div class="cfg-row separator">
+        <div class="cfg-label-col">
+          <div class="cfg-label">Destinatarios</div>
+          <div class="cfg-hint">Uno o más emails separados por coma o Intro. Se notifica a todos cuando se dispara un aviso.</div>
+        </div>
+        <div class="cfg-control">
+          <div class="tags-wrap" onclick="document.getElementById('tagInput').focus()">
+            <div class="tag">antonio@elgriego.net<button class="tag-rm" onclick="removeTag(this);onChange()" title="Eliminar">×</button></div>
+            <div class="tag">soporte@elgriego.net<button class="tag-rm" onclick="removeTag(this);onChange()" title="Eliminar">×</button></div>
+            <input class="tags-input" id="tagInput" type="text" placeholder="Añadir email…" onkeydown="handleTagKey(event)">
+          </div>
+        </div>
+      </div>
+
+      <!-- Trigger events -->
+      <div class="cfg-row separator">
+        <div class="cfg-label-col">
+          <div class="cfg-label">Eventos que disparan el aviso</div>
+          <div class="cfg-hint">Elige qué situaciones generan un email automático.</div>
+        </div>
+        <div class="cfg-control">
+          <div class="chk-group">
+            <label class="chk-row"><input type="checkbox" checked onchange="onChange()"><span class="chk-text"><b>Fuente falla tras 3 reintentos</b> — el proceso continúa sin ella (FR-011)</span></label>
+            <label class="chk-row"><input type="checkbox" checked onchange="onChange()"><span class="chk-text"><b>Métrica cae a cero por primera vez</b> — vs el mes anterior (FR-013)</span></label>
+            <label class="chk-row"><input type="checkbox" onchange="onChange()"><span class="chk-text">Informe completado correctamente</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Test send -->
+      <div class="cfg-row">
+        <div class="cfg-label-col">
+          <div class="cfg-label">Verificar configuración</div>
+          <div class="cfg-hint">Envía un email de prueba a todos los destinatarios para confirmar que la entrega funciona.</div>
+        </div>
+        <div class="cfg-control" style="gap:12px">
+          <button class="btn btn-ghost" onclick="testSend()">
+            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Enviar prueba
+          </button>
+          <div class="test-flash" id="testFlash">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Enviado
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── 2. SMTP ─── -->
+  <div class="cfg-card">
+    <div class="cfg-card-hdr">
+      <div class="cfg-card-icon" style="background:rgba(233,30,140,.1)">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--brand-primary)" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+      </div>
+      <div>
+        <div class="cfg-card-title">Servidor de correo (SMTP)</div>
+        <div class="cfg-card-desc">Credenciales del servidor usado para enviar notificaciones · se aplica a todos los sitios</div>
+      </div>
+      <span class="cfg-card-badge cb-ok">
+        <svg width="6" height="6" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
+        Verificado
+      </span>
+    </div>
+    <div class="cfg-body">
+
+      <div class="inline-alert" style="margin-top:8px">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="var(--status-info)" stroke-width="2" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div class="alert-text">Para Gmail, usa una <b>contraseña de aplicación</b> de Google en lugar de tu contraseña principal. Actívala en Cuenta Google → Seguridad → Verificación en dos pasos → Contraseñas de aplicaciones.</div>
+      </div>
+
+      <div class="cfg-row separator">
+        <div class="cfg-label-col">
+          <div class="cfg-label">Servidor SMTP</div>
+          <div class="cfg-hint">Host y puerto del servidor saliente.</div>
+        </div>
+        <div class="cfg-control" style="gap:10px">
+          <input class="inp mono inp-wide" type="text" value="smtp.gmail.com" onchange="onChange()">
+          <input class="inp mono inp-narrow" type="text" value="587" onchange="onChange()">
+        </div>
+      </div>
+
+      <div class="cfg-row separator">
+        <div class="cfg-label-col">
+          <div class="cfg-label">Usuario</div>
+          <div class="cfg-hint">Cuenta de correo desde la que se envían los avisos.</div>
+        </div>
+        <div class="cfg-control">
+          <input class="inp mono inp-wide" type="email" value="notificaciones@elgriego.net" onchange="onChange()">
+        </div>
+      </div>
+
+      <div class="cfg-row separator">
+        <div class="cfg-label-col">
+          <div class="cfg-label">Contraseña / App password</div>
+          <div class="cfg-hint">Almacenada de forma cifrada en el sistema de claves del OS.</div>
+        </div>
+        <div class="cfg-control">
+          <div class="inp-wrap">
+            <input class="inp mono inp-wide" id="smtpPass" type="password" value="acbd-efgh-ijkl-mnop" onchange="onChange()">
+            <button class="inp-eye" onclick="togglePass('smtpPass',this)" tabindex="-1">
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="cfg-row">
+        <div class="cfg-label-col">
+          <div class="cfg-label">Cifrado</div>
+          <div class="cfg-hint">Protocolo de seguridad de la conexión SMTP.</div>
+        </div>
+        <div class="cfg-control">
+          <select class="sel" onchange="onChange()">
+            <option>STARTTLS (recomendado)</option>
+            <option>SSL/TLS</option>
+            <option>Sin cifrado</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── 3. REINTENTOS ─── -->
+  <div class="cfg-card">
+    <div class="cfg-card-hdr">
+      <div class="cfg-card-icon" style="background:rgba(255,158,0,.1)">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--status-warn)" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3"/></svg>
+      </div>
+      <div>
+        <div class="cfg-card-title">Comportamiento de reintentos</div>
+        <div class="cfg-card-desc">Cuántas veces y con qué espera se reintenta una fuente antes de marcarla como fallida (FR-011)</div>
+      </div>
+    </div>
+    <div class="cfg-body">
+
+      <div class="cfg-row separator">
+        <div class="cfg-label-col">
+          <div class="cfg-label">Número máximo de reintentos</div>
+          <div class="cfg-hint">Por defecto 3. Tras agotar los intentos, la fuente se marca como fallida y el proceso continúa.</div>
+        </div>
+        <div class="cfg-control">
+          <div class="stepper">
+            <button class="stepper-btn" onclick="stepVal('retries',-1)">−</button>
+            <input class="stepper-val" id="retries" type="number" value="3" min="1" max="10" onchange="onChange()">
+            <button class="stepper-btn" onclick="stepVal('retries',1)">+</button>
+          </div>
+          <span style="font-size:12px;color:var(--text-3)">intentos</span>
+        </div>
+      </div>
+
+      <div class="cfg-row">
+        <div class="cfg-label-col">
+          <div class="cfg-label">Espera entre reintentos</div>
+          <div class="cfg-hint">Segundos de pausa entre cada intento. Un valor mayor reduce la carga sobre la fuente.</div>
+        </div>
+        <div class="cfg-control">
+          <div class="stepper">
+            <button class="stepper-btn" onclick="stepVal('delay',-5)">−</button>
+            <input class="stepper-val" id="delay" type="number" value="45" min="5" max="300" style="width:54px" onchange="onChange()">
+            <button class="stepper-btn" onclick="stepVal('delay',5)">+</button>
+          </div>
+          <span style="font-size:12px;color:var(--text-3)">segundos</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── 4. CREDENCIALES GLOBALES ─── -->
+  <div class="cfg-card">
+    <div class="cfg-card-hdr">
+      <div class="cfg-card-icon" style="background:rgba(123,47,247,.12)">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#B070FF" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+      <div>
+        <div class="cfg-card-title">Credenciales globales</div>
+        <div class="cfg-card-desc">Claves API compartidas por todos los sitios · las credenciales por sitio se gestionan en cada ficha</div>
+      </div>
+    </div>
+    <div class="cfg-body">
+
+      <div class="inline-alert warn" style="margin-top:8px">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="var(--status-warn)" stroke-width="2" style="flex-shrink:0;margin-top:1px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <div class="alert-text">Las claves API se guardan cifradas con el llavero del sistema operativo. <b>Nunca se escriben en texto plano en el disco.</b></div>
+      </div>
+
+      <div class="cfg-row separator">
+        <div class="cfg-label-col">
+          <div class="cfg-label">Google API Key</div>
+          <div class="cfg-hint">Usada para consultar PageSpeed Insights API y Google Search Console API. Crea una en Google Cloud Console con los permisos necesarios.</div>
+        </div>
+        <div class="cfg-control">
+          <div class="inp-wrap">
+            <input class="inp mono" id="googleKey" type="password" value="AIzaSy_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" style="width:300px" onchange="onChange()">
+            <button class="inp-eye" onclick="togglePass('googleKey',this)" tabindex="-1">
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="cfg-row separator">
+        <div class="cfg-label-col">
+          <div class="cfg-label">OAuth 2.0 Client ID</div>
+          <div class="cfg-hint">ID de cliente OAuth de Google para autorizar el acceso a Search Console y Site Kit en nombre de la cuenta del gestor.</div>
+        </div>
+        <div class="cfg-control">
+          <div class="inp-wrap">
+            <input class="inp mono" id="oauthId" type="password" value="000000000000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com" style="width:300px" onchange="onChange()">
+            <button class="inp-eye" onclick="togglePass('oauthId',this)" tabindex="-1">
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="cfg-row">
+        <div class="cfg-label-col">
+          <div class="cfg-label">OAuth 2.0 Client Secret</div>
+          <div class="cfg-hint">Secret asociado al Client ID anterior. Obtened ambos en Google Cloud Console → Credenciales.</div>
+        </div>
+        <div class="cfg-control">
+          <div class="inp-wrap">
+            <input class="inp mono" id="oauthSecret" type="password" value="GOCSPX-xxxxxxxxxxxxxxxxxxxxxxx" style="width:300px" onchange="onChange()">
+            <button class="inp-eye" onclick="togglePass('oauthSecret',this)" tabindex="-1">
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── 5. EXPORTACIÓN ─── -->
+  <div class="cfg-card">
+    <div class="cfg-card-hdr">
+      <div class="cfg-card-icon" style="background:rgba(0,200,150,.1)">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--status-ok)" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </div>
+      <div>
+        <div class="cfg-card-title">Exportación automática</div>
+        <div class="cfg-card-desc">Carpeta de destino y formato para los archivos CSV y capturas que genera cada informe</div>
+      </div>
+    </div>
+    <div class="cfg-body">
+
+      <div class="cfg-row separator">
+        <div class="cfg-label-col">
+          <div class="cfg-label">Carpeta de exportación</div>
+          <div class="cfg-hint">Ruta local donde se guardan los CSV y las capturas de pantalla. Debe existir antes de generar el primer informe.</div>
+        </div>
+        <div class="cfg-control" style="gap:8px">
+          <input class="inp mono" type="text" value="~/Documentos/ReportingGriego/exports" style="width:280px" onchange="onChange()">
+          <button class="btn btn-ghost btn-sm">
+            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+            Examinar
+          </button>
+        </div>
+      </div>
+
+      <div class="cfg-row separator">
+        <div class="cfg-label-col">
+          <div class="cfg-label">Exportar CSV al completar informe</div>
+          <div class="cfg-hint">Genera automáticamente el CSV de métricas en la carpeta de exportación cuando el informe finaliza.</div>
+        </div>
+        <div class="cfg-control">
+          <label class="toggle-wrap">
+            <div class="toggle">
+              <input type="checkbox" checked onchange="onChange()">
+              <div class="toggle-track"></div>
+              <div class="toggle-thumb"></div>
+            </div>
+            <span class="toggle-label">Activo</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="cfg-row">
+        <div class="cfg-label-col">
+          <div class="cfg-label">Separador de campos CSV</div>
+          <div class="cfg-hint">Punto y coma recomendado para compatibilidad con Excel en configuraciones de idioma español.</div>
+        </div>
+        <div class="cfg-control">
+          <select class="sel" onchange="onChange()">
+            <option selected>Punto y coma ( ; )</option>
+            <option>Coma ( , )</option>
+            <option>Tabulador ( \t )</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── 6. ZONA DE PELIGRO ─── -->
+  <div class="cfg-card" style="border-color:rgba(255,51,85,.25)">
+    <div class="cfg-card-hdr" style="border-bottom-color:rgba(255,51,85,.2)">
+      <div class="cfg-card-icon" style="background:rgba(255,51,85,.1)">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--status-err)" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </div>
+      <div>
+        <div class="cfg-card-title" style="color:var(--status-err)">Zona de peligro</div>
+        <div class="cfg-card-desc">Acciones irreversibles · no se puede deshacer</div>
+      </div>
+    </div>
+    <div class="cfg-body">
+      <div class="danger-row">
+        <div>
+          <div class="danger-label">Restablecer configuración</div>
+          <div class="danger-hint">Elimina toda la configuración global y vuelve a los valores por defecto. Los sitios y el histórico no se ven afectados.</div>
+        </div>
+        <button class="btn btn-danger btn-sm">Restablecer</button>
+      </div>
+      <div class="danger-row">
+        <div>
+          <div class="danger-label">Eliminar todos los registros históricos</div>
+          <div class="danger-hint">Borra permanentemente el histórico de todos los sitios. Las capturas no se eliminan del disco.</div>
+        </div>
+        <button class="btn btn-danger btn-sm">Eliminar histórico</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── 7. ACERCA DE ─── -->
+  <div class="cfg-card">
+    <div class="cfg-card-hdr">
+      <div class="cfg-card-icon" style="background:rgba(233,30,140,.08)">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--brand-primary)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      <div>
+        <div class="cfg-card-title">Acerca de ReportingGriego</div>
+      </div>
+      <span class="cfg-card-badge cb-ok">v1.0.0</span>
+    </div>
+    <div class="about-grid">
+      <div class="about-item"><div class="about-lbl">Versión</div><div class="about-val brand">ReportingGriego v1.0.0</div></div>
+      <div class="about-item"><div class="about-lbl">Python</div><div class="about-val">3.11.9 · uv 0.4.1</div></div>
+      <div class="about-item"><div class="about-lbl">Sitios activos</div><div class="about-val">4 / 5</div></div>
+      <div class="about-item"><div class="about-lbl">Registros históricos</div><div class="about-val">38 filas</div></div>
+      <div class="about-item"><div class="about-lbl">Base de datos</div><div class="about-val">~/ReportingGriego/data.db · SQLite 3.45</div></div>
+      <div class="about-item"><div class="about-lbl">Marca</div><div class="about-val">elGriegoNET® · 2026</div></div>
+    </div>
+  </div>
+
+</main>
+
+<!-- Save bar -->
+<div class="save-bar" id="saveBar">
+  <div class="save-bar-msg"><b>Cambios sin guardar</b> · los ajustes no se aplican hasta que guardes</div>
+  <button class="btn btn-ghost btn-sm" onclick="discardChanges()">Descartar</button>
+  <button class="btn btn-primary" onclick="saveChanges()">
+    <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    Guardar cambios
+  </button>
+</div>
+
+<script>
+var dirty = false;
+
+function onChange() {
+  if (!dirty) {
+    dirty = true;
+    document.getElementById('saveBar').classList.add('visible');
+  }
+}
+
+function discardChanges() {
+  dirty = false;
+  document.getElementById('saveBar').classList.remove('visible');
+}
+
+function saveChanges() {
+  dirty = false;
+  document.getElementById('saveBar').classList.remove('visible');
+  // Flash a quick "saved" indicator
+  var bar = document.getElementById('saveBar');
+  bar.querySelector('.save-bar-msg').textContent = '';
+  // Brief "saved" flash in the button
+}
+
+function updateNotifBadge() {
+  var checked = document.getElementById('notifToggle').checked;
+  var badge = document.getElementById('notifBadge');
+  var label = document.getElementById('notifLabel');
+  if (checked) {
+    badge.className = 'cfg-card-badge cb-ok';
+    badge.innerHTML = '<svg width="6" height="6" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg> Activo';
+    label.textContent = 'Activo';
+  } else {
+    badge.className = 'cfg-card-badge cb-neu';
+    badge.innerHTML = '<svg width="6" height="6" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg> Inactivo';
+    label.textContent = 'Inactivo';
+  }
+}
+
+function testSend() {
+  var flash = document.getElementById('testFlash');
+  flash.classList.remove('visible');
+  setTimeout(function() { flash.classList.add('visible'); }, 300);
+  setTimeout(function() { flash.classList.remove('visible'); }, 3500);
+}
+
+function togglePass(id, btn) {
+  var inp = document.getElementById(id);
+  var isPass = inp.type === 'password';
+  inp.type = isPass ? 'text' : 'password';
+  btn.innerHTML = isPass
+    ? '<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>'
+    : '<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+}
+
+function stepVal(id, delta) {
+  var el = document.getElementById(id);
+  var v = parseInt(el.value) + delta;
+  var min = parseInt(el.min) || 0;
+  var max = parseInt(el.max) || 9999;
+  el.value = Math.max(min, Math.min(max, v));
+  onChange();
+}
+
+function handleTagKey(e) {
+  if (e.key === 'Enter' || e.key === ',') {
+    e.preventDefault();
+    var val = e.target.value.trim().replace(/,$/, '');
+    if (val && val.includes('@')) {
+      var wrap = e.target.parentNode;
+      var tag = document.createElement('div');
+      tag.className = 'tag';
+      tag.innerHTML = val + '<button class="tag-rm" onclick="removeTag(this);onChange()" title="Eliminar">×</button>';
+      wrap.insertBefore(tag, e.target);
+      e.target.value = '';
+      onChange();
+    }
+  }
+}
+
+function removeTag(btn) {
+  btn.parentNode.remove();
+}
+</script>
