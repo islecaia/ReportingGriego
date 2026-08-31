@@ -277,6 +277,8 @@ Llamar a `report:generate` desde DevTools con un sitio real → en la consola de
 
 Pulsar GENERAR INFORME → la barra avanza suavemente en 5 pasos → al final aparece un mensaje del tipo "Informe de agosto generado correctamente. 5 fuentes conectadas." o "1 fuente falló. El resto del informe está completo."
 
+Verificar también el disparo manual en cualquier fecha (ver `specs/001-informe-mensual-seo/spec.md` FR-014/FR-015/FR-016): pulsar GENERAR INFORME un día que no sea fin de mes (p. ej. el día 15) → la app NO debe rechazar la generación por no ser fecha de corte → se genera correctamente una fila nueva con la fecha real de esa pulsación como periodo.
+
 ---
 
 ### T-14 — Insertar monthly_records + alerta de métrica cero
