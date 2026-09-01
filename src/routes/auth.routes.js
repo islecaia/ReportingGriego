@@ -21,6 +21,7 @@ router.post('/login', async (req, res) => {
   req.session.userId = username;
   console.log('[login] session id antes de save:', req.session.id);
 
+  res.setHeader('Cache-Control', 'no-store, no-cache, private');
   req.session.save((err) => {
     if (err) {
       console.error('[login] session.save error:', err);

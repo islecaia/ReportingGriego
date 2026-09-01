@@ -11,7 +11,8 @@ const opportunitiesRoutes = require('./src/routes/opportunities.routes');
 const settingsRoutes = require('./src/routes/settings.routes');
 
 const app = express();
-app.set('trust proxy', true); // Railway: nº de saltos de proxy no garantizado — confiar en toda la cadena
+app.set('trust proxy', true);
+app.set('etag', false); // Railway: nº de saltos de proxy no garantizado — confiar en toda la cadena
 
 app.use(express.json());
 app.use(sessionMiddleware);
