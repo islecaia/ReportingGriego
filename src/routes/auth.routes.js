@@ -17,7 +17,11 @@ router.post('/login', async (req, res) => {
   }
 
   req.session.userId = username;
-  return res.json({ ok: true });
+  // Forzar guardado en PostgreSQL antes de responder al cliente
+  req.session.save((err) => {
+    if (err) return res.status(500).json({ ok: false, error: 'Error de sesión' });
+    return res.json({ ok: true });
+  });
 });
 
 router.post('/logout', (req, res) => {
