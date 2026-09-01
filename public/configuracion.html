@@ -25,6 +25,17 @@
 
   <div class="page">
     <h1>Configuración</h1>
+    <details class="help-panel">
+      <summary><span class="help-badge">?</span>¿Cómo funciona esta pantalla?</summary>
+      <div class="help-body">
+        <p>Configura los ajustes globales del sistema.</p>
+        <ul>
+          <li><strong>Servidor SMTP:</strong> introduce las credenciales de tu servidor de correo para que la herramienta envíe alertas automáticas cuando falle una fuente de datos al generar un informe.</li>
+          <li><strong>Credenciales de acceso</strong> (usuario y contraseña de login): se gestionan como variables de entorno en Railway, no desde aquí.</li>
+          <li><strong>Claves de API</strong> de cada fuente (GSC, GA4, etc.): se configuran por sitio desde la pantalla de <strong>Sitios</strong>.</li>
+        </ul>
+      </div>
+    </details>
     <p style="color:var(--text-muted)">Ajustes globales para las alertas por email (FR-008, FR-010). Las credenciales de acceso a la aplicación se gestionan como variables de entorno en Railway, no aquí.</p>
 
     <div class="card">

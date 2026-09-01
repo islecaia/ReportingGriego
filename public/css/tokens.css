@@ -102,3 +102,42 @@ td { color: var(--text-primary); font-family: var(--font-mono); font-size: 13px;
 .alert-error { background: rgba(255,51,85,.10); border-color: var(--status-error); }
 .alert-warning { background: rgba(255,158,0,.10); border-color: var(--status-warning); }
 .alert-success { background: rgba(0,200,150,.10); border-color: var(--status-success); }
+
+/* ── Help panel (desplegable de ayuda por página) ── */
+.help-panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--sp5);
+  overflow: hidden;
+}
+.help-panel summary {
+  display: flex; align-items: center; gap: var(--sp2);
+  padding: 10px var(--sp4); cursor: pointer; user-select: none;
+  font-size: 11px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--text-secondary); list-style: none;
+}
+.help-panel summary::-webkit-details-marker { display: none; }
+.help-panel summary::before {
+  content: '▶'; font-size: 9px; color: var(--brand-primary-dim);
+  transition: transform 150ms ease; flex-shrink: 0;
+}
+.help-panel[open] summary::before { transform: rotate(90deg); }
+.help-panel[open] summary {
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+}
+.help-panel summary .help-badge {
+  width: 17px; height: 17px; border-radius: 50%;
+  background: var(--brand-primary-dim); color: var(--brand-primary);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 900; flex-shrink: 0;
+}
+.help-body {
+  padding: var(--sp4) var(--sp5); color: var(--text-secondary);
+  font-size: 13px; line-height: 1.65;
+}
+.help-body p { margin: 0 0 var(--sp3); }
+.help-body ol, .help-body ul { margin: 0 0 var(--sp3); padding-left: 1.4em; }
+.help-body li { margin-bottom: 6px; }
+.help-body strong { color: var(--text-primary); }
