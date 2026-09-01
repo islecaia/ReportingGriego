@@ -3,29 +3,49 @@ const bcrypt = require('bcrypt');
 
 const router = express.Router();
 
-// research.md §2: credencial única en variables de entorno, sin tabla `users`.
 router.post('/login', async (req, res) => {
   const { username, password } = req.body || {};
+  console.log('[login] intento:', username);
+
   const validUser = username === process.env.ADMIN_USERNAME;
   const validPass = validUser && password
     ? await bcrypt.compare(password, process.env.ADMIN_PASSWORD_HASH || '')
     : false;
 
+  console.log('[login] validUser:', validUser, 'validPass:', validPass);
+
   if (!validUser || !validPass) {
-    // FR-003: mensaje genérico, no revela cuál credencial falló.
     return res.status(401).json({ ok: false, error: 'Usuario o contraseña incorrectos' });
   }
 
   req.session.userId = username;
-  // Forzar guardado en PostgreSQL antes de responder al cliente
+  console.log('[login] session id antes de save:', req.session.id);
+
   req.session.save((err) => {
-    if (err) return res.status(500).json({ ok: false, error: 'Error de sesión' });
+    if (err) {
+      console.error('[login] session.save error:', err);
+      return res.status(500).json({ ok: false, error: 'Error de sesión' });
+    }
+    console.log('[login] session guardada OK, id:', req.session.id);
     return res.json({ ok: true });
   });
 });
 
 router.post('/logout', (req, res) => {
   req.session.destroy(() => res.json({ ok: true }));
+});
+
+// Ruta de diagnóstico temporal
+router.get('/debug-session', (req, res) => {
+  res.json({
+    sessionId: req.session.id,
+    userId: req.session.userId || null,
+    cookie: req.session.cookie,
+    headers: {
+      cookie: req.headers.cookie || null,
+      host: req.headers.host,
+    },
+  });
 });
 
 module.exports = router;
