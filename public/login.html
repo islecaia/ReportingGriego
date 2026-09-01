@@ -21,7 +21,7 @@
 <body>
   <div class="login-card">
     <div class="login-brand">ReportingGriego</div>
-    <form id="loginForm">
+    <form id="loginForm" method="post" action="/api/login">
       <div class="field">
         <label for="username">Usuario</label>
         <input class="input" id="username" name="username" type="text" autocomplete="username" required />
@@ -30,7 +30,7 @@
         <label for="password">Contraseña</label>
         <input class="input" id="password" name="password" type="password" autocomplete="current-password" required />
       </div>
-      <button class="btn btn-primary" id="loginBtn" type="submit">Entrar</button>
+      <button class="btn btn-primary" id="loginBtn" type="button">Entrar</button>
       <div class="alert alert-error" id="loginError">Usuario o contraseña incorrectos.</div>
     </form>
   </div>
