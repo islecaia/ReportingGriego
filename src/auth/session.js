@@ -9,9 +9,9 @@ const sessionMiddleware = session({
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: false,   // TEST: desactivado para diagnosticar problema de cookie
     sameSite: 'lax',
-    maxAge: 1000 * 60 * 60 * 12, // 12h
+    maxAge: 1000 * 60 * 60 * 12,
   },
 });
 
