@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Histórico · ReportingGriego</title>
+  <link rel="stylesheet" href="/css/tokens.css" />
+  <style>
+    .filters { margin-bottom: var(--sp6); }
+    .up { color: var(--status-success); } .down { color: var(--status-error); } .neu { color: var(--text-muted); }
+  </style>
+</head>
+<body>
+  <nav class="topnav">
+    <span class="brand">ReportingGriego</span>
+    <a href="/sitios.html" data-page="sitios">Sitios</a>
+    <a href="/generar.html" data-page="generar">Generar informe</a>
+    <a href="/historico.html" data-page="historico">Histórico</a>
+    <a href="/oportunidades.html" data-page="oportunidades">Oportunidades SEO</a>
+    <a href="/configuracion.html" data-page="configuracion">Configuración</a>
+    <span class="spacer"></span>
+    <button id="logoutBtn">Cerrar sesión</button>
+  </nav>
+
+  <div class="page">
+    <h1>Histórico de registros</h1>
+    <div class="filters">
+      <select class="select" id="siteSelect"></select>
+    </div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead>
+          <tr>
+            <th>Periodo</th><th>Fuentes</th><th>Impresiones</th><th>Clics</th><th>Sesiones</th>
+            <th>Orgánico%</th><th>Directo%</th><th>Redes%</th><th>Referidos%</th>
+            <th>PS Escritorio</th><th>PS Móvil</th><th>Incidencias</th>
+          </tr>
+        </thead>
+        <tbody id="recordsBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="/js/nav.js"></script>
+  <script src="/js/historico.js"></script>
+</body>
+</html>

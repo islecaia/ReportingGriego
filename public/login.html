@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Iniciar sesión · ReportingGriego</title>
+  <link rel="stylesheet" href="/css/tokens.css" />
+  <style>
+    body { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .login-card {
+      width: 360px; background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg); padding: var(--sp8);
+    }
+    .login-brand { font-family: var(--font-display); font-size: 28px; text-align: center; margin-bottom: var(--sp6);
+      background: var(--gradient-brand); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: var(--sp4); }
+    .field label { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-secondary); }
+    #loginBtn { width: 100%; justify-content: center; margin-top: var(--sp2); }
+    #loginError { display: none; margin-top: var(--sp4); }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <div class="login-brand">ReportingGriego</div>
+    <form id="loginForm">
+      <div class="field">
+        <label for="username">Usuario</label>
+        <input class="input" id="username" name="username" type="text" autocomplete="username" required />
+      </div>
+      <div class="field">
+        <label for="password">Contraseña</label>
+        <input class="input" id="password" name="password" type="password" autocomplete="current-password" required />
+      </div>
+      <button class="btn btn-primary" id="loginBtn" type="submit">Entrar</button>
+      <div class="alert alert-error" id="loginError">Usuario o contraseña incorrectos.</div>
+    </form>
+  </div>
+  <script src="/js/login.js"></script>
+</body>
+</html>

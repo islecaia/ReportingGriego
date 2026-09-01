@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sitios · ReportingGriego</title>
+  <link rel="stylesheet" href="/css/tokens.css" />
+  <style>
+    .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--sp6); }
+    .drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: none; align-items: center; justify-content: center; z-index: 10; }
+    .drawer-overlay.open { display: flex; }
+    .drawer { width: 420px; max-height: 85vh; overflow-y: auto; background: var(--bg-card); border: 1px solid var(--border-strong); border-radius: var(--radius-lg); padding: var(--sp6); }
+    .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: var(--sp4); }
+    .field label { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-secondary); }
+    .source-block { border-top: 1px solid var(--border-subtle); padding-top: var(--sp3); margin-top: var(--sp3); }
+    .source-block h4 { margin: 0 0 var(--sp2); font-size: 12px; color: var(--text-secondary); }
+    .drawer-footer { display: flex; justify-content: flex-end; gap: var(--sp3); margin-top: var(--sp4); }
+    .source-dots { display: flex; gap: 4px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; }
+    .dot-ok { background: var(--status-success); }
+    .dot-none { background: var(--status-neutral); }
+  </style>
+</head>
+<body>
+  <nav class="topnav">
+    <span class="brand">ReportingGriego</span>
+    <a href="/sitios.html" data-page="sitios">Sitios</a>
+    <a href="/generar.html" data-page="generar">Generar informe</a>
+    <a href="/historico.html" data-page="historico">Histórico</a>
+    <a href="/oportunidades.html" data-page="oportunidades">Oportunidades SEO</a>
+    <a href="/configuracion.html" data-page="configuracion">Configuración</a>
+    <span class="spacer"></span>
+    <button id="logoutBtn">Cerrar sesión</button>
+  </nav>
+
+  <div class="page">
+    <div class="page-header">
+      <h1>Sitios</h1>
+      <button class="btn btn-primary" id="addSiteBtn">Añadir sitio</button>
+    </div>
+    <table>
+      <thead>
+        <tr><th>Sitio</th><th>Estado</th><th>Fuentes</th><th></th></tr>
+      </thead>
+      <tbody id="sitesBody"></tbody>
+    </table>
+  </div>
+
+  <div class="drawer-overlay" id="drawerOverlay">
+    <div class="drawer">
+      <h3>Añadir sitio</h3>
+      <div class="field"><label>Nombre</label><input class="input" id="siteName" type="text" placeholder="ej. elgriego.net" /></div>
+      <div class="field"><label>URL</label><input class="input" id="siteUrl" type="url" placeholder="https://ejemplo.com" /></div>
+
+      <div class="source-block"><h4>Google Search Console</h4>
+        <div class="field"><label>Service Account (JSON)</label><input class="input" id="sc-json" type="text" placeholder="Pega el JSON de la cuenta de servicio" /></div>
+      </div>
+      <div class="source-block"><h4>Google Site Kit (GA4)</h4>
+        <div class="field"><label>GA4 Property ID</label><input class="input" id="sk-prop" type="text" placeholder="123456789" /></div>
+        <div class="field"><label>Service Account (JSON)</label><input class="input" id="sk-json" type="text" /></div>
+      </div>
+      <div class="source-block"><h4>Squirrly SEO / Ubersuggest</h4>
+        <div class="field"><label>API Key</label><input class="input" id="sq-key" type="password" /></div>
+      </div>
+      <div class="source-block"><h4>PageSpeed Insights</h4>
+        <div class="field"><label>Google API Key</label><input class="input" id="ps-key" type="password" /></div>
+      </div>
+      <div class="source-block"><h4>Security Ninja</h4>
+        <div class="field"><label>API Key</label><input class="input" id="sn-key" type="password" /></div>
+        <div class="field"><label>Site ID</label><input class="input" id="sn-siteid" type="text" /></div>
+      </div>
+
+      <div class="drawer-footer">
+        <button class="btn btn-ghost" id="cancelDrawerBtn" type="button">Cancelar</button>
+        <button class="btn btn-primary" id="saveSiteBtn" type="button">Guardar sitio</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/nav.js"></script>
+  <script src="/js/sitios.js"></script>
+</body>
+</html>

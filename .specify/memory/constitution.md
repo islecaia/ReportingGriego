@@ -1,65 +1,52 @@
 <!--
 Sync Impact Report
 ==================
-Version change: 2.0.0 → 2.1.0
-Rationale: MINOR bump. Following user confirmation, two principles that were
-dropped in the 2.0.0 rewrite are restored as explicit Core Principles VIII
-and IX, because they correspond directly to already-ratified requirements
-(FR-009 site isolation, FR-008 evidence screenshots) in spec.md. Restoring
-principles that don't redefine or remove anything else is additive → MINOR,
-not MAJOR.
+Version change: 2.1.0 → 3.0.0
+Rationale: MAJOR bump. Two Core Principles are redefined in a backward-incompatible
+way, triggered by a real conflict caught during /speckit-plan for a second product
+variant (002-informe-web-railway, Express+PostgreSQL+Railway) against a constitution
+written only with the first variant (001-informe-mensual-seo, Electron+SQLite) in
+mind. Both changes were explicitly approved by the user via AskUserQuestion before
+being applied — this was not an autonomous resolution.
 
-Added principles (restored from v1.0.0, renumbered):
-  VIII. Aislamiento por Sitio             (was Principio IV in v1.0.0)
-  IX.   Evidencia Visual como Respaldo    (was Principio VIII in v1.0.0)
+Redefined principles:
+  IV. Simplicidad de Infraestructura
+      → IV. Simplicidad de Infraestructura Proporcional al Modelo de Despliegue
+      Previously mandated SQLite/no-server/local-executable unconditionally — this
+      directly contradicted the web variant's Express+PostgreSQL+Railway stack.
+      Now defines two valid deployment models (desktop local-first vs. web managed)
+      and states the underlying criterion (avoid speculative/unnecessary
+      infrastructure) that both must satisfy, instead of hard-coding one topology.
 
-Open items carried over from the 2.0.0 Sync Impact Report, NOT resolved by
-this amendment (user was asked only about isolation/evidence; these two were
-flagged but not raised as a question, resolved by agent judgment call —
-revisit if that call was wrong):
-  - Principio IX de v1.0.0 (Ante Ambigüedad, NON-NEGOTIABLE) remains demoted
-    to a "Flujo de Trabajo de Desarrollo" bullet rather than a numbered Core
-    Principle. Functionally unchanged (still MUST-worded).
-  - Escalabilidad (80% time-reduction target, was Principio VII in v1.0.0,
-    SC-001 in spec.md) remains descriptive prose in the intro paragraph, not
-    an enforceable Core Principle.
+  IX. Evidencia Visual como Respaldo
+      → IX. Evidencia Visual como Respaldo (Cuando Esté en Alcance)
+      Previously unconditional ("cada registro mensual generado DEBE ir acompañado
+      de una captura") — this directly contradicted 002-informe-web-railway's
+      spec.md, which explicitly excludes the Evidencias screen from its MVP scope.
+      Now conditional on the capability being in scope for a given product variant,
+      with the requirement that any exclusion be documented explicitly in that
+      variant's spec.md (never silently dropped).
 
---- Original v1.0.0 → v2.0.0 Sync Impact Report (superseded, kept for
-    history) ---
-Version change: 1.0.0 → 2.0.0
-Rationale: MAJOR bump. The user re-ran /speckit-constitution with a fully
-re-authored principle set (7 principles, explicit count per user directive,
-overriding the previous 9). Several v1.0.0 principles were removed or
-demoted as standalone Core Principles — a backward-incompatible governance
-redefinition, which is a MAJOR change per this document's own versioning
-policy.
+Updated sections:
+  - "Alcance y Restricciones Técnicas del MVP" — was written for a single stack
+    (Electron only); now lists both valid deployment variants explicitly by name
+    (001-informe-mensual-seo, 002-informe-web-railway) so it stays consistent with
+    the redefined Principio IV instead of silently going stale next to it.
 
-Principle mapping (v1.0.0 → v2.0.0):
-  II.  Histórico Inmutable                          → I.   Integridad del Histórico por Encima de Todo (renamed)
-  I.   Cero Valores Implícitos                       → II.  Cero Ambigüedad en los Datos (merged/renamed)
-  III. Fallar de Forma Visible, Nunca en Silencio    → III. El Fallo No Bloquea (renamed, narrower wording)
-  V.   Fuentes de Datos Cerradas y Vía API           → demoted: now in "Alcance y Restricciones Técnicas del MVP" (no longer a Core Principle)
-  IX.  Ante Ambigüedad, Parar y Preguntar (NON-NEG.) → demoted: now a bullet in "Flujo de Trabajo de Desarrollo" (no longer a Core Principle)
-  IV.  Aislamiento por Sitio                         → REMOVED in 2.0.0, RESTORED in 2.1.0 as Principio VIII
-  VI.  Automatizar la Recogida, No el Criterio       → REMOVED (not present in new input; not merged elsewhere)
-  VII. Escalabilidad sin Coste Manual Añadido        → REMOVED as a testable principle; the 80% target survives only as prose in the new intro paragraph, not as an enforceable MUST
-  VIII. Evidencia Visual como Respaldo               → REMOVED in 2.0.0, RESTORED in 2.1.0 as Principio IX
+Principles NOT changed: I, II, III, V, VI, VII, VIII — still 9 Core Principles
+total, same count, same order, only IV and IX reworded.
 
-Added sections in 2.0.0:
-  - Unnumbered intro/purpose paragraph under the title (project purpose, the
-    5 data sources, the >1h/site → 80% reduction goal)
-  - "Alcance y Restricciones Técnicas del MVP" (replaces/expands the old
-    "Alcance del MVP"; now also encodes the stack: Electron + Node.js +
-    SQLite + ExcelJS + Playwright + Nodemailer, no UI framework, IPC-only
-    main↔renderer with contextIsolation)
+Added/removed sections: none by name.
+
+Deferred items: none — both conflicts found during this session were resolved via
+explicit user approval in the same amendment, not deferred.
 
 Templates requiring follow-up review (not modified by this command):
-  - .specify/templates/plan-template.md — its Constitution Check section may
-    still reference an older principle set/count; re-verify on next
-    /speckit-plan.
-  - CLAUDE.md — already states "Lee .specify/memory/constitution.md primero"
-    and an ambiguity-stop rule; still consistent with this version, no change
-    needed.
+  - specs/001-informe-mensual-seo/plan.md — already Electron-only; still compliant
+    with the redefined Principio IV's "desktop local-first" branch, no change needed.
+  - specs/002-informe-web-railway/plan.md — being authored in this same session
+    against this new version; must cite the "web gestionada" branch of Principio IV
+    explicitly in its Constitution Check.
 -->
 
 # ReportingGriego Constitution
@@ -104,16 +91,34 @@ parcial es preferible a ningún informe.
 **Razón**: bloquear todo el proceso por el fallo de una sola fuente
 penalizaría innecesariamente a las fuentes que sí respondieron correctamente.
 
-### IV. Simplicidad de Infraestructura
+### IV. Simplicidad de Infraestructura Proporcional al Modelo de Despliegue
 
-Toda la infraestructura DEBE ser local: SQLite es la única base de datos, sin
-servidor y sin sincronización en la nube. El backup DEBE poder resolverse
-copiando un único archivo. La aplicación DEBE instalarse mediante un
-ejecutable, sin requerir que el usuario tenga Node.js instalado.
+Cada variante de despliegue del producto DEBE usar la infraestructura más
+simple que cumpla sus requisitos — nunca infraestructura especulativa,
+distribuida o de mayor escala de la necesaria. Son modelos de despliegue
+válidos:
 
-**Razón**: es una herramienta de uso interno de una agencia; añadir
-infraestructura de servidor o nube introduciría coste operativo y superficie
-de fallo sin aportar valor al caso de uso.
+- **Escritorio local-first**: SQLite de archivo único como única base de
+  datos, sin servidor propio ni sincronización en la nube; la aplicación se
+  instala mediante un ejecutable autocontenido, sin requerir que el usuario
+  tenga Node.js instalado; el backup se resuelve copiando el archivo.
+- **Web gestionada**: un único servicio de aplicación (p. ej. Express) más
+  una única base de datos gestionada por el proveedor de alojamiento (p. ej.
+  PostgreSQL en Railway), sin infraestructura adicional (colas,
+  microservicios, cachés distribuidas, orquestación) salvo justificación
+  explícita y por escrito; el backup/recuperación se resuelve con la
+  operación gestionada que ofrezca el proveedor de base de datos.
+
+Ninguna variante DEBE introducir servidores propios más allá del servicio de
+aplicación único, orquestación multi-servicio, ni sincronización multi-nube,
+salvo justificación explícita.
+
+**Razón**: el criterio no es "nunca un servidor", sino evitar coste operativo
+y superficie de fallo innecesarios para una herramienta de uso interno de
+agencia. Cuando el producto pasa de herramienta de escritorio a aplicación
+web accesible por URL, una base de datos gestionada de un único proveedor
+sigue siendo la opción más simple disponible en ese contexto — replicar el
+modelo "solo SQLite" ahí sería más frágil, no más simple.
 
 ### V. La UI Refleja la Marca, No el Backend
 
@@ -157,26 +162,42 @@ en la recogida, ni en el almacenamiento, ni en la presentación.
 mezclar datos entre sitios sería un error de integridad grave y, en contexto
 de agencia con clientes distintos, una fuga de datos entre clientes.
 
-### IX. Evidencia Visual como Respaldo
+### IX. Evidencia Visual como Respaldo (Cuando Esté en Alcance)
 
-Cada registro mensual generado DEBE ir acompañado de una captura de pantalla
+Cuando la variante de producto incluya la evidencia visual en su alcance,
+cada registro mensual generado DEBE ir acompañado de una captura de pantalla
 de la fuente de datos, como evidencia verificable del dato registrado.
+Excluir la evidencia visual del alcance de una variante concreta (p. ej. un
+MVP) es una decisión válida, pero DEBE quedar documentada explícitamente en
+el `spec.md` de esa variante — nunca omitida en silencio ni dejada implícita.
 
 **Razón**: ante una discrepancia futura o una consulta de un cliente, la
-captura permite verificar qué mostraba realmente la fuente en el momento de la
-recogida, sin depender solo de la cifra ya procesada.
+captura permite verificar qué mostraba realmente la fuente en el momento de
+la recogida. Pero exigirla sin excepción en toda variante del producto
+—incluidas aquellas donde el propio spec ya ha decidido excluirla por alcance
+de MVP— convertiría este principio en un bloqueo automático de cualquier
+iteración incremental legítima. La condición recae sobre el alcance
+declarado, no sobre la importancia de la evidencia cuando sí está en alcance.
 
 ## Alcance y Restricciones Técnicas del MVP
 
-- **Fuentes de datos**: el MVP integra exactamente cinco fuentes — Google
-  Search Console, GA4/Site Kit, Squirrly SEO/Ubersuggest, PageSpeed Insights y
-  Security Ninja. Los datos se obtienen vía API; no se introducen pasos de
-  copiado/pegado manual desde el panel de una herramienta (ver Principio II).
-- **Stack**: Electron + Node.js + SQLite + ExcelJS + Playwright + Nodemailer.
-  Sin framework de UI. La comunicación entre el proceso main y el renderer se
-  realiza exclusivamente por IPC, con `contextIsolation` activado.
-- **Fuera de alcance en v1**: autenticación multi-usuario, sincronización en
-  la nube, mapas de calor/grabación de sesión, y tests automatizados.
+- **Fuentes de datos**: todas las variantes del producto integran exactamente
+  cinco fuentes — Google Search Console, GA4/Site Kit, Squirrly
+  SEO/Ubersuggest, PageSpeed Insights y Security Ninja. Los datos se obtienen
+  vía API; no se introducen pasos de copiado/pegado manual desde el panel de
+  una herramienta (ver Principio II).
+- **Variantes de despliegue válidas** (ver Principio IV):
+  - **Escritorio** (`001-informe-mensual-seo`): Electron + Node.js + SQLite +
+    Playwright + Nodemailer. Sin framework de UI. IPC main↔renderer con
+    `contextIsolation` activado.
+  - **Web gestionada** (`002-informe-web-railway`): Node.js + Express +
+    PostgreSQL + `express-session`/`bcrypt` para el acceso protegido +
+    Nodemailer. Frontend servido como estático desde `public/`, comunicación
+    por `fetch()` a rutas `/api/...`. Sin Electron, sin SQLite, sin
+    Playwright.
+- **Fuera de alcance en v1 (todas las variantes)**: autenticación
+  multi-usuario con roles diferenciados, sincronización en la nube entre
+  variantes, mapas de calor/grabación de sesión, y tests automatizados.
 
 ## Flujo de Trabajo de Desarrollo
 
@@ -221,4 +242,4 @@ infraestructura no local, o un texto de error que no siga el Principio VI)
 DEBE justificarse explícitamente y por escrito en el documento correspondiente,
 no asumirse implícitamente.
 
-**Version**: 2.1.0 | **Ratified**: 2026-08-31 | **Last Amended**: 2026-08-31
+**Version**: 3.0.0 | **Ratified**: 2026-08-31 | **Last Amended**: 2026-08-31

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Configuración · ReportingGriego</title>
+  <link rel="stylesheet" href="/css/tokens.css" />
+  <style>
+    .card { background: var(--bg-card); border-radius: var(--radius-lg); padding: var(--sp6); margin-bottom: var(--sp6); max-width: 480px; }
+    .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: var(--sp4); }
+    .field label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); }
+    #testFlash { display: none; margin-top: var(--sp3); }
+  </style>
+</head>
+<body>
+  <nav class="topnav">
+    <span class="brand">ReportingGriego</span>
+    <a href="/sitios.html" data-page="sitios">Sitios</a>
+    <a href="/generar.html" data-page="generar">Generar informe</a>
+    <a href="/historico.html" data-page="historico">Histórico</a>
+    <a href="/oportunidades.html" data-page="oportunidades">Oportunidades SEO</a>
+    <a href="/configuracion.html" data-page="configuracion">Configuración</a>
+    <span class="spacer"></span>
+    <button id="logoutBtn">Cerrar sesión</button>
+  </nav>
+
+  <div class="page">
+    <h1>Configuración</h1>
+    <p style="color:var(--text-muted)">Ajustes globales para las alertas por email (FR-008, FR-010). Las credenciales de acceso a la aplicación se gestionan como variables de entorno en Railway, no aquí.</p>
+
+    <div class="card">
+      <h3>Servidor de correo (SMTP)</h3>
+      <div class="field"><label>Host</label><input class="input" id="smtpHost" type="text" /></div>
+      <div class="field"><label>Puerto</label><input class="input" id="smtpPort" type="text" /></div>
+      <div class="field"><label>Usuario</label><input class="input" id="smtpUser" type="email" /></div>
+      <div class="field"><label>Contraseña</label><input class="input" id="smtpPass" type="password" /></div>
+      <div class="field"><label>Email de notificación</label><input class="input" id="notifyEmail" type="email" /></div>
+      <button class="btn btn-primary" id="saveBtn">Guardar cambios</button>
+      <button class="btn btn-ghost" id="testBtn">Enviar prueba</button>
+      <div class="alert alert-warning" id="testFlash"></div>
+    </div>
+  </div>
+
+  <script src="/js/nav.js"></script>
+  <script src="/js/configuracion.js"></script>
+</body>
+</html>

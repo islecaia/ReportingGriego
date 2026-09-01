@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Oportunidades SEO · ReportingGriego</title>
+  <link rel="stylesheet" href="/css/tokens.css" />
+  <style>
+    .counters { display: flex; gap: var(--sp4); margin: var(--sp4) 0 var(--sp6); }
+    .counter { background: var(--bg-card); border-radius: var(--radius-md); padding: var(--sp4); }
+    .counter .n { font-family: var(--font-display); font-size: 28px; color: var(--brand-accent); }
+  </style>
+</head>
+<body>
+  <nav class="topnav">
+    <span class="brand">ReportingGriego</span>
+    <a href="/sitios.html" data-page="sitios">Sitios</a>
+    <a href="/generar.html" data-page="generar">Generar informe</a>
+    <a href="/historico.html" data-page="historico">Histórico</a>
+    <a href="/oportunidades.html" data-page="oportunidades">Oportunidades SEO</a>
+    <a href="/configuracion.html" data-page="configuracion">Configuración</a>
+    <span class="spacer"></span>
+    <button id="logoutBtn">Cerrar sesión</button>
+  </nav>
+
+  <div class="page">
+    <h1>Oportunidades SEO</h1>
+    <select class="select" id="siteSelect"></select>
+
+    <div class="counters">
+      <div class="counter"><div class="n" id="countTop10">0</div><div>Top 4–10</div></div>
+      <div class="counter"><div class="n" id="countTop100">0</div><div>Top 11–100</div></div>
+    </div>
+
+    <table>
+      <thead><tr><th>Palabra clave</th><th>Volumen</th><th>Posición</th><th>Tramo</th></tr></thead>
+      <tbody id="oppBody"></tbody>
+    </table>
+  </div>
+
+  <script src="/js/nav.js"></script>
+  <script src="/js/oportunidades.js"></script>
+</body>
+</html>

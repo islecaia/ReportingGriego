@@ -1,0 +1,104 @@
+/* Tokens de DESIGN.md — extraídos una sola vez para todas las páginas (a diferencia de la
+   variante Electron, que los duplicaba por mockup). */
+:root {
+  --bg-app: #0F000A;
+  --bg-panel: #1A000F;
+  --bg-card: #240018;
+  --bg-card-hover: #2E001F;
+  --bg-input: #1A000F;
+  --border-subtle: #4A0035;
+  --border-strong: #7A0058;
+
+  --brand-primary: #E91E8C;
+  --brand-primary-hover: #FF4DB8;
+  --brand-primary-dim: #7A1050;
+  --brand-accent: #FF9E00;
+  --brand-accent-hover: #FFB833;
+
+  --status-success: #00C896;
+  --status-warning: #FF9E00;
+  --status-error: #FF3355;
+  --status-info: #3DB8FF;
+  --status-neutral: #7A6A78;
+
+  --text-primary: #FFFFFF;
+  --text-secondary: #C8A8BF;
+  --text-muted: #7A5A73;
+  --text-on-brand: #FFFFFF;
+  --text-zero: #4A3548;
+
+  --gradient-brand: linear-gradient(135deg, #E91E8C 0%, #7B2FF7 100%);
+  --gradient-rainbow: linear-gradient(90deg, #FF0054, #FF4500, #FFB800, #00C896, #3DB8FF, #7B2FF7, #E91E8C);
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --sp1: 4px; --sp2: 8px; --sp3: 12px; --sp4: 16px;
+  --sp5: 20px; --sp6: 24px; --sp8: 32px;
+
+  --font-display: 'Bebas Neue', Impact, sans-serif;
+  --font-ui: 'Inter', 'Segoe UI', Helvetica, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; min-height: 100%; background: var(--bg-app); color: var(--text-primary);
+  font-family: var(--font-ui); font-size: 13px; line-height: 1.5;
+}
+
+.topnav {
+  height: 44px; display: flex; align-items: center; gap: 4px; padding: 0 16px;
+  background: var(--bg-panel); border-bottom: 1px solid var(--border-subtle);
+}
+.topnav .brand {
+  font-family: var(--font-display); font-size: 20px; letter-spacing: .03em;
+  background: var(--gradient-brand); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-right: 16px;
+}
+.topnav a {
+  color: var(--text-secondary); text-decoration: none; font-size: 11px; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase; padding: 8px 12px; border-radius: 4px;
+}
+.topnav a.active { color: var(--text-primary); background: rgba(233,30,140,.18); }
+.topnav a:hover { color: var(--text-primary); }
+.topnav .spacer { margin-left: auto; }
+.topnav button {
+  background: transparent; border: 1px solid var(--border-subtle); color: var(--text-secondary);
+  border-radius: 6px; padding: 6px 12px; font-size: 11px; font-weight: 700; cursor: pointer;
+}
+
+.page { padding: var(--sp6); max-width: 1200px; margin: 0 auto; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; border: none; border-radius: 8px;
+  padding: 10px 24px; font: 700 13px var(--font-ui); letter-spacing: .08em; text-transform: uppercase;
+  cursor: pointer; transition: background 150ms ease;
+}
+.btn-primary { background: var(--brand-primary); color: var(--text-on-brand); }
+.btn-primary:hover { background: var(--brand-primary-hover); }
+.btn-ghost { background: transparent; color: var(--brand-primary); border: 1.5px solid var(--brand-primary); }
+
+.input, .select {
+  background: var(--bg-input); border: 1.5px solid var(--border-subtle); border-radius: 8px;
+  padding: 10px 14px; color: var(--text-primary); font: 400 13px var(--font-ui);
+}
+.input:focus, .select:focus { outline: none; border-color: var(--brand-primary); }
+
+.badge { padding: 2px 8px; border-radius: 4px; font: 700 10px var(--font-ui); text-transform: uppercase; }
+.badge-success { background: rgba(0,200,150,.15); color: var(--status-success); }
+.badge-error { background: rgba(255,51,85,.15); color: var(--status-error); }
+.badge-warning { background: rgba(255,158,0,.15); color: var(--status-warning); }
+.badge-neutral { background: rgba(122,106,120,.15); color: var(--status-neutral); }
+
+table { width: 100%; border-collapse: collapse; background: var(--bg-card); border-radius: 10px; overflow: hidden; }
+th { background: var(--bg-panel); color: var(--text-secondary); font: 700 11px var(--font-ui); text-transform: uppercase; padding: 10px 16px; text-align: left; }
+td { color: var(--text-primary); font-family: var(--font-mono); font-size: 13px; padding: 10px 16px; border-bottom: 1px solid var(--border-subtle); }
+.zero { color: var(--text-zero); }
+
+.alert { border-radius: 8px; padding: 12px 16px; border-left: 4px solid; margin-top: 12px; }
+.alert-error { background: rgba(255,51,85,.10); border-color: var(--status-error); }
+.alert-warning { background: rgba(255,158,0,.10); border-color: var(--status-warning); }
+.alert-success { background: rgba(0,200,150,.10); border-color: var(--status-success); }

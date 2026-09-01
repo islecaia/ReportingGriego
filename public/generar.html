@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Generar informe · ReportingGriego</title>
+  <link rel="stylesheet" href="/css/tokens.css" />
+  <style>
+    .config-row { display: flex; gap: var(--sp4); align-items: flex-end; margin-bottom: var(--sp6); }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); }
+    #summary { display: none; }
+    #sourceList span.badge { margin-right: 6px; }
+  </style>
+</head>
+<body>
+  <nav class="topnav">
+    <span class="brand">ReportingGriego</span>
+    <a href="/sitios.html" data-page="sitios">Sitios</a>
+    <a href="/generar.html" data-page="generar">Generar informe</a>
+    <a href="/historico.html" data-page="historico">Histórico</a>
+    <a href="/oportunidades.html" data-page="oportunidades">Oportunidades SEO</a>
+    <a href="/configuracion.html" data-page="configuracion">Configuración</a>
+    <span class="spacer"></span>
+    <button id="logoutBtn">Cerrar sesión</button>
+  </nav>
+
+  <div class="page">
+    <h1>Generar informe</h1>
+    <div class="config-row">
+      <div class="field">
+        <label for="siteSelect">Sitio</label>
+        <select class="select" id="siteSelect"></select>
+      </div>
+      <button class="btn btn-primary" id="genBtn">Generar informe</button>
+    </div>
+
+    <p id="statusMsg" style="color:var(--text-muted)">Selecciona un sitio y pulsa Generar informe. Puedes hacerlo en cualquier momento, no solo a fin de mes.</p>
+
+    <div id="summary">
+      <h3 id="summaryTitle"></h3>
+      <p id="summaryMeta" style="font-family:var(--font-mono);color:var(--text-muted)"></p>
+      <div id="sourceList"></div>
+      <div id="zeroAlerts"></div>
+    </div>
+  </div>
+
+  <script src="/js/nav.js"></script>
+  <script src="/js/generar.js"></script>
+</body>
+</html>

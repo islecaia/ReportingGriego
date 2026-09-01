@@ -1,0 +1,21 @@
+{
+  "name": "reportinggriego",
+  "version": "0.1.0",
+  "description": "Automatización del informe mensual de métricas SEO y rendimiento web",
+  "author": "isleca",
+  "main": "server.js",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "connect-pg-simple": "^9.0.1",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "googleapis": "^140.0.1",
+    "nodemailer": "^6.9.14",
+    "pg": "^8.12.0"
+  }
+}
