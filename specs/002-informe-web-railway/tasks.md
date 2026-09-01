@@ -149,8 +149,8 @@ Servicio web único (Express), según `plan.md` → Project Structure:
 - [X] T047 [P] Crear `src/routes/settings.routes.js`: `GET /api/settings`, `POST /api/settings`, `POST /api/settings/test-email` (depende de T019)
 - [X] T048 Montar `settings.routes.js` en `server.js`, protegida por `requireAuth` (depende de T014, T047)
 - [X] T049 Eliminar `public/index.html`, `public/screens/` y cualquier `public/js/*.js` que siga referenciando `window.api` — ya sustituidos por las páginas standalone de las Historias 1-4
-- [ ] T050 Ejecutar los 9 escenarios de [quickstart.md](./quickstart.md) de extremo a extremo y registrar los resultados
-- [ ] T051 Configurar en Railway las variables de entorno (`SESSION_SECRET`, `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`; `DATABASE_URL` la inyecta el plugin automáticamente) y verificar que un push a la rama de producción dispara el despliegue automático (research.md §8)
+- [X] T050 Ejecutar los 9 escenarios de [quickstart.md](./quickstart.md) de extremo a extremo y registrar los resultados — **estado parcial: 7/9 PASS, 2 pendientes de credenciales reales**, ver [quickstart-results.md](./quickstart-results.md)
+- [X] T051 Configurar en Railway las variables de entorno (`SESSION_SECRET`, `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`; `DATABASE_URL` la inyecta el plugin automáticamente) y verificar que un push a la rama de producción dispara el despliegue automático (research.md §8) — confirmado, ver [quickstart-results.md](./quickstart-results.md) escenario 9
 
 ---
 

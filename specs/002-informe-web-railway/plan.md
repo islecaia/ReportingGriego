@@ -6,6 +6,8 @@
 
 **Note**: This template is filled in by the `/speckit-plan` command; its definition describes the execution workflow.
 
+**Estado de validación** (2026-09-01): 7/9 escenarios de `quickstart.md` en PASS contra el despliegue real de Railway, incluido el escenario 9 (despliegue automático desde GitHub). Escenarios 5 y 6 pendientes de credenciales SMTP/API reales. Detalle: [quickstart-results.md](./quickstart-results.md).
+
 ## Summary
 
 Reemplaza la variante de escritorio (`001-informe-mensual-seo`, Electron+SQLite) por una aplicación web de un único servicio Express, alojada en Railway con PostgreSQL gestionado, protegida por login único (`express-session` + `bcrypt`). Conserva el núcleo funcional (registro mensual inmutable, cero explícito, recogida vía API con reintento, oportunidades SEO) y el sistema de diseño de `DESIGN.md`; excluye explícitamente la pantalla Evidencias/capturas de pantalla de este MVP. Esta feature motivó la enmienda de la constitución a v3.0.0: el Principio IV ahora reconoce "web gestionada" como modelo de despliegue válido junto al de escritorio, y el Principio IX condiciona la evidencia visual al alcance declarado de cada variante.
