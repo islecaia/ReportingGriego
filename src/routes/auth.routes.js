@@ -28,6 +28,7 @@ router.post('/login', async (req, res) => {
       return res.status(500).json({ ok: false, error: 'Error de sesión' });
     }
     console.log('[login] session guardada OK, id:', req.session.id);
+    res.cookie('sid', req.session.id, { httpOnly: true, secure: false, sameSite: 'lax' });
     return res.json({ ok: true });
   });
 });
